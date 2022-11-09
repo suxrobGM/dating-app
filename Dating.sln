@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dating.DbMigrator", "src\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dating.Infrastructure.EF.Migrations", "src\Core\Dating.Infrastructure.EF.Migrations\Dating.Infrastructure.EF.Migrations.csproj", "{7BB15439-C2A8-4761-AB6D-DD475B455F98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dating.IdentityServer", "src\Server\Dating.IdentityServer\Dating.IdentityServer.csproj", "{55BE40B6-CB2A-490A-8C74-1D233814C6ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{7BB15439-C2A8-4761-AB6D-DD475B455F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BB15439-C2A8-4761-AB6D-DD475B455F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BB15439-C2A8-4761-AB6D-DD475B455F98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55BE40B6-CB2A-490A-8C74-1D233814C6ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55BE40B6-CB2A-490A-8C74-1D233814C6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55BE40B6-CB2A-490A-8C74-1D233814C6ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55BE40B6-CB2A-490A-8C74-1D233814C6ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{D6E84F34-C369-433F-BEB6-4BF3CAE60E74} = {4DA07323-3C6B-4FA4-B4EE-A0AFF49BF138}
 		{C0C0A0FE-EA82-4969-8867-AACC1175626F} = {4DA07323-3C6B-4FA4-B4EE-A0AFF49BF138}
 		{7BB15439-C2A8-4761-AB6D-DD475B455F98} = {4DA07323-3C6B-4FA4-B4EE-A0AFF49BF138}
+		{55BE40B6-CB2A-490A-8C74-1D233814C6ED} = {1E026825-7CF4-49EB-97DC-E460173598E4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EEAAEC4-80B8-43DD-B1F1-9F3E0DD7447F}
