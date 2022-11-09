@@ -7,19 +7,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4DA07323-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{1E026825-7CF4-49EB-97DC-E460173598E4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dating.WebApi", "src\Server\Dating.WebApi\Dating.WebApi.csproj", "{96B45FED-C05F-48C7-ABCB-AFFB785B2FAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dating.API", "src\Server\Dating.API\Dating.API.csproj", "{96B45FED-C05F-48C7-ABCB-AFFB785B2FAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dating.Domain", "src\Core\Dating.Domain\Dating.Domain.csproj", "{CC57F0CD-3BE8-48D4-9993-D177B0509DBE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dating.Domain.Shared", "src\Core\Dating.Domain.Shared\Dating.Domain.Shared.csproj", "{498B1271-1122-4578-B6D5-2FA44F712EDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Infrastructure.EntityFramework", "src\Core\Domain.Infrastructure.EntityFramework\Domain.Infrastructure.EntityFramework.csproj", "{D28AC710-2817-4C23-BE8B-7D83A8E3B77F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dating.Infrastructure.EF", "src\Core\Dating.Infrastructure.EF\Dating.Infrastructure.EF.csproj", "{D28AC710-2817-4C23-BE8B-7D83A8E3B77F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dating.Application", "src\Core\Dating.Application\Dating.Application.csproj", "{82696E00-4338-4054-B9ED-6BBFD04207DA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dating.Application.Contracts", "src\Core\Dating.Application.Contracts\Dating.Application.Contracts.csproj", "{D6E84F34-C369-433F-BEB6-4BF3CAE60E74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dating.DbMigrator", "src\Core\Dating.DbMigrator\Dating.DbMigrator.csproj", "{C0C0A0FE-EA82-4969-8867-AACC1175626F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dating.Infrastructure.EF.Migrations", "src\Core\Dating.Infrastructure.EF.Migrations\Dating.Infrastructure.EF.Migrations.csproj", "{7BB15439-C2A8-4761-AB6D-DD475B455F98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{C0C0A0FE-EA82-4969-8867-AACC1175626F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0C0A0FE-EA82-4969-8867-AACC1175626F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0C0A0FE-EA82-4969-8867-AACC1175626F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BB15439-C2A8-4761-AB6D-DD475B455F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB15439-C2A8-4761-AB6D-DD475B455F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB15439-C2A8-4761-AB6D-DD475B455F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB15439-C2A8-4761-AB6D-DD475B455F98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{82696E00-4338-4054-B9ED-6BBFD04207DA} = {4DA07323-3C6B-4FA4-B4EE-A0AFF49BF138}
 		{D6E84F34-C369-433F-BEB6-4BF3CAE60E74} = {4DA07323-3C6B-4FA4-B4EE-A0AFF49BF138}
 		{C0C0A0FE-EA82-4969-8867-AACC1175626F} = {4DA07323-3C6B-4FA4-B4EE-A0AFF49BF138}
+		{7BB15439-C2A8-4761-AB6D-DD475B455F98} = {4DA07323-3C6B-4FA4-B4EE-A0AFF49BF138}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EEAAEC4-80B8-43DD-B1F1-9F3E0DD7447F}

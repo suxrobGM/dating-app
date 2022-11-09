@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dating.WebApi.Controllers;
+namespace Dating.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
