@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dating.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221109044919_Initial")]
+    [Migration("20221109171705_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -104,9 +104,6 @@ namespace Dating.Infrastructure.EF.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
@@ -118,6 +115,9 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.Property<string>("SenderId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TextContent")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");

@@ -101,9 +101,6 @@ namespace Dating.Infrastructure.EF.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
@@ -115,6 +112,9 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.Property<string>("SenderId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TextContent")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");

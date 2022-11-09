@@ -123,7 +123,7 @@ namespace Dating.Infrastructure.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TextContent = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsEdited = table.Column<bool>(type: "bit", nullable: false),
                     IsRead = table.Column<bool>(type: "bit", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),

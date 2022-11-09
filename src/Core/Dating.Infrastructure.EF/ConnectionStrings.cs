@@ -2,5 +2,6 @@
 
 internal static class ConnectionStrings
 {
-    public const string Local = "Server=(localdb)\\MSSQLLocalDB; Database=dating_db; Integrated Security=True;";
+    // ReSharper disable once InconsistentNaming
+    public const string LocalDB = "Server=(localdb)\\MSSQLLocalDB; Database=dating_db; Integrated Security=True;";
 }

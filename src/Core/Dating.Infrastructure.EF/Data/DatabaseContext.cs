@@ -11,7 +11,7 @@ public class DatabaseContext : IdentityDbContext<User, AppRole, string>
 
     public DatabaseContext(DatabaseContextOptions options)
     {
-        _connectionString = options.ConnectionString ?? ConnectionStrings.Local;
+        _connectionString = options.ConnectionString ?? ConnectionStrings.LocalDB;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)

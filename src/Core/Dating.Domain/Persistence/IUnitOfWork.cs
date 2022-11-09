@@ -9,5 +9,5 @@ public interface IUnitOfWork
     /// Save changes to database
     /// </summary>
     /// <returns>Number of rows modified after save changes.</returns>
-    Task<int> CommitAsync();
+    Task<int> SaveChangesAsync();
 }
