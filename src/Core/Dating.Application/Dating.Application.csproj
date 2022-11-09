@@ -10,4 +10,17 @@
       <ProjectReference Include="..\Dating.Application.Contracts\Dating.Application.Contracts.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Handlers\Commands" />
+      <Folder Include="Handlers\Queries" />
+      <Folder Include="Validators\Commands" />
+      <Folder Include="Validators\Queries" />
+    </ItemGroup>
+
 </Project>
