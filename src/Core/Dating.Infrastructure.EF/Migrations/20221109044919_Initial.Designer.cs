@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dating.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221109044320_Initial")]
+    [Migration("20221109044919_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -440,7 +440,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("Dating.Domain.Entities.Profile", b =>
                 {
-                    b.HasOne("Dating.Domain.Entities.Media", "MainPhoto")
+                    b.HasOne("Dating.Domain.Entities.ProfilePhoto", "MainPhoto")
                         .WithOne()
                         .HasForeignKey("Dating.Domain.Entities.Profile", "MainPhotoId");
 

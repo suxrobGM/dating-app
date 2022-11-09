@@ -146,36 +146,6 @@ namespace Dating.Infrastructure.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "profiles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    MainPhotoId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Orientation = table.Column<int>(type: "int", nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    School = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Company = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LivingIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsVerified = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_profiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_profiles_media_MainPhotoId",
-                        column: x => x.MainPhotoId,
-                        principalTable: "media",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_profiles_users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "user_claims",
                 columns: table => new
                 {
@@ -324,10 +294,35 @@ namespace Dating.Infrastructure.EF.Migrations
                         column: x => x.PhotoId,
                         principalTable: "media",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "profiles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MainPhotoId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Orientation = table.Column<int>(type: "int", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    School = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Company = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LivingIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsVerified = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_profiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_profile_photos_profiles_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "profiles",
+                        name: "FK_profiles_profile_photos_MainPhotoId",
+                        column: x => x.MainPhotoId,
+                        principalTable: "profile_photos",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_profiles_users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "users",
                         principalColumn: "Id");
                 });
 
@@ -420,16 +415,32 @@ namespace Dating.Infrastructure.EF.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_profile_photos_profiles_ProfileId",
+                table: "profile_photos",
+                column: "ProfileId",
+                principalTable: "profiles",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "messages");
+            migrationBuilder.DropForeignKey(
+                name: "FK_profiles_users_UserId",
+                table: "profiles");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_profile_photos_media_PhotoId",
+                table: "profile_photos");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_profile_photos_profiles_ProfileId",
+                table: "profile_photos");
 
             migrationBuilder.DropTable(
-                name: "profile_photos");
+                name: "messages");
 
             migrationBuilder.DropTable(
                 name: "role_claims");
@@ -453,9 +464,6 @@ namespace Dating.Infrastructure.EF.Migrations
                 name: "user_tokens");
 
             migrationBuilder.DropTable(
-                name: "profiles");
-
-            migrationBuilder.DropTable(
                 name: "interests");
 
             migrationBuilder.DropTable(
@@ -465,10 +473,16 @@ namespace Dating.Infrastructure.EF.Migrations
                 name: "roles");
 
             migrationBuilder.DropTable(
+                name: "users");
+
+            migrationBuilder.DropTable(
                 name: "media");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "profiles");
+
+            migrationBuilder.DropTable(
+                name: "profile_photos");
         }
     }
 }

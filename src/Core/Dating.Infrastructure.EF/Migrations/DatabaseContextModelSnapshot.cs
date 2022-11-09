@@ -437,7 +437,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("Dating.Domain.Entities.Profile", b =>
                 {
-                    b.HasOne("Dating.Domain.Entities.Media", "MainPhoto")
+                    b.HasOne("Dating.Domain.Entities.ProfilePhoto", "MainPhoto")
                         .WithOne()
                         .HasForeignKey("Dating.Domain.Entities.Profile", "MainPhotoId");
 

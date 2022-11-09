@@ -12,7 +12,7 @@ public class Profile : Entity
     public string? LivingIn { get; set; }
     public bool IsVerified { get; set; }
     
-    public virtual Media? MainPhoto { get; set; }
+    public virtual ProfilePhoto? MainPhoto { get; set; }
     public virtual User? User { get; set; }
     public virtual List<ProfilePhoto> Photos { get; set; } = new();
 }

@@ -43,9 +43,6 @@ public class DatabaseContext : IdentityDbContext<User, AppRole, string>
                 {
                     e.ToTable("user_interests");
                 });
-
-            // entity.HasMany(m => m.Interests)
-            //     .WithOne();
         });
 
         builder.Entity<Message>(entity =>
