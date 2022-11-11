@@ -1,6 +1,6 @@
 ﻿namespace Dating.Domain.Entities;
 
-public class Like : Entity
+public class Like : AuditableEntity
 {
     public virtual string? TargetUserId { get; set; }
     

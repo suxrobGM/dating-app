@@ -143,7 +143,9 @@ public class Index : PageModel
         };
 
         var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-        if (context?.IdP != null && await _schemeProvider.GetSchemeAsync(context.IdP) != null)
+        var authScheme = await _schemeProvider.GetSchemeAsync(context.IdP);
+        
+        if (context?.IdP != null && authScheme != null)
         {
             var local = context.IdP == Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider;
 
@@ -153,12 +155,14 @@ public class Index : PageModel
                 EnableLocalLogin = local,
             };
 
-            Input.Username = context?.LoginHint;
+            Input.Username = context!.LoginHint;
 
             if (!local)
             {
                 View.ExternalProviders = new[]
-                    { new ViewModel.ExternalProvider { AuthenticationScheme = context.IdP } };
+                {
+                    new ViewModel.ExternalProvider { AuthenticationScheme = context.IdP }
+                };
             }
 
             return;

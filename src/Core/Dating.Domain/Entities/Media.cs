@@ -1,6 +1,6 @@
 ﻿namespace Dating.Domain.Entities;
 
-public class Media : Entity
+public class Media : AuditableEntity
 {
     public string? Url { get; set; }
     public string? ContentType { get; set; }

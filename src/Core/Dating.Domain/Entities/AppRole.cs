@@ -2,7 +2,7 @@
 
 namespace Dating.Domain.Entities;
 
-public class AppRole : IdentityRole<string>, IAggregateRoot
+public class AppRole : IdentityRole, IAggregateRoot
 {
     public AppRole(string name): base(name)
     {

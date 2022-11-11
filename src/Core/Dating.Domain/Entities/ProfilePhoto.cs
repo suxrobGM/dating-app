@@ -1,6 +1,6 @@
 ﻿namespace Dating.Domain.Entities;
 
-public class ProfilePhoto : Entity
+public class ProfilePhoto : AuditableEntity
 {
     public string? ProfileId { get; set; }
     public string? PhotoId { get; set; }

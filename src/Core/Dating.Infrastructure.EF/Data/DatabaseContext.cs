@@ -1,25 +1,48 @@
 ﻿using Dating.Infrastructure.EF.Helpers;
+using Dating.Infrastructure.EF.Interceptors;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 
 namespace Dating.Infrastructure.EF.Data;
 
 public class DatabaseContext : IdentityDbContext<User, AppRole, string>
 {
     private readonly string _connectionString;
+    private readonly IMediator? _mediator;
+    private readonly AuditableEntitySaveChangesInterceptor? _saveChangesInterceptor;
 
-    public DatabaseContext(DatabaseContextOptions options)
+    public DatabaseContext(
+        DatabaseContextOptions options,
+        AuditableEntitySaveChangesInterceptor? saveChangesInterceptor = null,
+        IMediator? mediator = null)
     {
         _connectionString = options.ConnectionString ?? ConnectionStrings.LocalDB;
+        _saveChangesInterceptor = saveChangesInterceptor;
+        _mediator = mediator;
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
+    {
+        if (_mediator != null)
+        {
+            await _mediator.DispatchDomainEvents(this);
+        }
+
+        return await base.SaveChangesAsync(cancellationToken);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        if (options.IsConfigured)
-            return;
-        
-        DbContextHelpers.ConfigureSqlServer(_connectionString, options);
+        if (_saveChangesInterceptor != null)
+        {
+            options.AddInterceptors(_saveChangesInterceptor);
+        }
+
+        if (!options.IsConfigured)
+        {
+            DbContextHelpers.ConfigureSqlServer(_connectionString, options);
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

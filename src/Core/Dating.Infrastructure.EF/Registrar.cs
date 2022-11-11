@@ -1,5 +1,6 @@
 ﻿using Dating.Infrastructure.EF.Builder;
 using Dating.Infrastructure.EF.Data;
+using Dating.Infrastructure.EF.Interceptors;
 using Dating.Infrastructure.EF.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,20 @@ namespace Dating.Infrastructure.EF;
 
 public static class Registrar
 {
+    public static IInfrastructureBuilder AddInfrastructureLayer(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        string connectionStringSection = "LocalDB")
+    {
+        AddDatabase(services, configuration, connectionStringSection);
+        var identityBuilder = AddIdentity(services);
+
+        services.AddScoped<AuditableEntitySaveChangesInterceptor>();
+        services.AddScoped<IUnitOfWork, UnitOfWork<DatabaseContext>>();
+        services.AddScoped<IRepository, GenericRepository<DatabaseContext>>();
+        return new InfrastructureBuilder(identityBuilder);
+    }
+    
     private static void AddDatabase(
         IServiceCollection services,
         IConfiguration configuration,
@@ -39,18 +54,5 @@ public static class Registrar
         .AddEntityFrameworkStores<DatabaseContext>();
 
         return identityBuilder;
-    }
-    
-    public static IInfrastructureBuilder AddInfrastructureLayer(
-        this IServiceCollection services,
-        IConfiguration configuration,
-        string connectionStringSection = "LocalDB")
-    {
-        var identityBuilder = AddIdentity(services);
-        AddDatabase(services, configuration, connectionStringSection);
-        
-        services.AddScoped<IRepository, GenericRepository<DatabaseContext>>();
-        services.AddScoped<UnitOfWork<DatabaseContext>>();
-        return new InfrastructureBuilder(identityBuilder);
     }
 }
