@@ -1,6 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
+#nullable enable
 namespace Dating.IdentityServer.Pages.Login;
 
 public class ViewModel
@@ -12,7 +13,7 @@ public class ViewModel
         Enumerable.Empty<ExternalProvider>();
 
     public IEnumerable<ViewModel.ExternalProvider> VisibleExternalProviders =>
-        ExternalProviders.Where(x => !String.IsNullOrWhiteSpace(x.DisplayName));
+        ExternalProviders.Where(x => !string.IsNullOrWhiteSpace(x.DisplayName));
 
     public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders?.Count() == 1;
 

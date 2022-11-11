@@ -41,8 +41,9 @@ public class Index : PageModel
         _events = events;
     }
 
-    public async Task<IActionResult> OnGet(string returnUrl)
+    public async Task<IActionResult> OnGet(string? returnUrl)
     {
+        returnUrl ??= "/";
         await BuildModelAsync(returnUrl);
 
         if (View.IsExternalLoginOnly)
@@ -79,11 +80,9 @@ public class Index : PageModel
 
                 return Redirect(Input.ReturnUrl);
             }
-            else
-            {
-                // since we don't have a valid context, then we just go back to the home page
-                return Redirect("~/");
-            }
+
+            // since we don't have a valid context, then we just go back to the home page
+            return Redirect("~/");
         }
 
         if (ModelState.IsValid)
@@ -143,7 +142,7 @@ public class Index : PageModel
         };
 
         var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-        var authScheme = await _schemeProvider.GetSchemeAsync(context.IdP);
+        var authScheme = await _schemeProvider.GetSchemeAsync(context?.IdP ?? "");
         
         if (context?.IdP != null && authScheme != null)
         {

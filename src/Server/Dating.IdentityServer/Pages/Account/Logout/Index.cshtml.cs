@@ -1,3 +1,4 @@
+#nullable enable
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;

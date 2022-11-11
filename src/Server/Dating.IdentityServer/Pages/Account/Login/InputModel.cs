@@ -2,21 +2,20 @@
 // See LICENSE in the project root for license information.
 
 
+#nullable enable
 using System.ComponentModel.DataAnnotations;
 
 namespace Dating.IdentityServer.Pages.Login;
 
 public class InputModel
 {
-    [Required] 
+    [Required]
     public string? Username { get; set; }
 
-    [Required] 
+    [Required]
     public string? Password { get; set; }
 
     public bool RememberLogin { get; set; }
-
-    public string? ReturnUrl { get; set; }
-
-    public string? Button { get; set; }
+    public string ReturnUrl { get; set; } = "/";
+    public string Button { get; set; } = "login";
 }
