@@ -2,7 +2,7 @@
 
 public class Like : AuditableEntity
 {
-    public virtual string? TargetUserId { get; set; }
+    public string? TargetUserId { get; set; }
     
     /// <summary>
     /// The target user who belongs this like.
