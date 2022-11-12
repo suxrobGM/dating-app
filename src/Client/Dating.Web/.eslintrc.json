@@ -16,6 +16,7 @@
     ],
     "rules": {
         "new-cap": "off",
+        "no-unused-vars": "off",
         "max-len": "off",
         "linebreak-style": "off",
         "require-jsdoc": "off"

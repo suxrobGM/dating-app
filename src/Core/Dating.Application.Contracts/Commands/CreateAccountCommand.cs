@@ -11,5 +11,5 @@ public class CreateAccountCommand : RequestBase<ResponseResult>
     public SexualOrientation Orientation { get; set; }
     public DateTime Birthdate { get; set; }
     public string[]? Interests { get; set; }
-    public string? MainPhotoId { get; set; }
+    public string? MainPhotoUrl { get; set; }
 }
