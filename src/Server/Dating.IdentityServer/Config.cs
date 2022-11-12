@@ -46,6 +46,26 @@ public static class Config
             }
         };
     }
+    
+    public static IEnumerable<ApiResource> ApiResources()
+    {
+        return new ApiResource[]
+        {
+            new()
+            {
+                Name = "dating.api",
+                DisplayName = "Dating API",
+                Scopes = {
+                    "logistics.api.admin",
+                    "logistics.api.client"
+                },
+                UserClaims = {
+                    CustomClaimTypes.Role, 
+                    CustomClaimTypes.Permission
+                }
+            }
+        };
+    }
 
     public static IEnumerable<Client> Clients(IConfiguration configuration)
     {
