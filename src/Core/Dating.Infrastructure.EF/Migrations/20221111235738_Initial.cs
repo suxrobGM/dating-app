@@ -16,7 +16,8 @@ namespace Dating.Infrastructure.EF.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NormalizedName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -329,7 +330,7 @@ namespace Dating.Infrastructure.EF.Migrations
                     School = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Company = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LivingIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LivingCity = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dating.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221110212806_Initial")]
+    [Migration("20221111235738_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -76,6 +76,11 @@ namespace Dating.Infrastructure.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -211,7 +216,7 @@ namespace Dating.Infrastructure.EF.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LivingIn")
+                    b.Property<string>("LivingCity")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MainPhotoId")

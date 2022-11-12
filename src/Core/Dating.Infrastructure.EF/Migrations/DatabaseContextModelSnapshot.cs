@@ -73,6 +73,11 @@ namespace Dating.Infrastructure.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -208,7 +213,7 @@ namespace Dating.Infrastructure.EF.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LivingIn")
+                    b.Property<string>("LivingCity")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MainPhotoId")

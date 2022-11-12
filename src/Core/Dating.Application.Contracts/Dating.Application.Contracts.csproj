@@ -7,9 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Commands" />
       <Folder Include="Models" />
       <Folder Include="Queries" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Dating.Domain.Shared\Dating.Domain.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="11.0.0" />
     </ItemGroup>
 
 </Project>

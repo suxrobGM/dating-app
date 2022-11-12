@@ -1,5 +1,7 @@
-﻿namespace Dating.Application.Contracts.Common;
+﻿using MediatR;
 
-public abstract class RequestBase<T> where T : IResponseResult
+namespace Dating.Application.Contracts.Common;
+
+public abstract class RequestBase<T> : IRequest<T> where T : IResponseResult
 {
 }

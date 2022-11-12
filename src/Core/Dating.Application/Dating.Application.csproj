@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Dating.Application.Contracts\Dating.Application.Contracts.csproj" />
+      <ProjectReference Include="..\Dating.Domain\Dating.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -17,9 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Handlers\Commands" />
       <Folder Include="Handlers\Queries" />
-      <Folder Include="Validators\Commands" />
       <Folder Include="Validators\Queries" />
     </ItemGroup>
 

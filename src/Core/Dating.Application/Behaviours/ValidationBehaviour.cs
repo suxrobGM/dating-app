@@ -1,8 +1,4 @@
-﻿
-using FluentValidation;
-using MediatR;
-
-namespace Dating.Application.Behaviours;
+﻿namespace Dating.Application.Behaviours;
 
 public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

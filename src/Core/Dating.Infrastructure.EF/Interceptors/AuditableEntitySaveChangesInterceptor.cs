@@ -39,7 +39,7 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
                 entry.Entity.Created = DateTime.UtcNow;
             } 
 
-            if (entry.State is EntityState.Added or EntityState.Modified || entry.HasChangedOwnedEntities())
+            if (entry.State is EntityState.Modified || entry.HasChangedOwnedEntities())
             {
                 entry.Entity.LastModifiedBy = _httpContext.GetUserId();
                 entry.Entity.LastModified = DateTime.UtcNow;
@@ -55,7 +55,7 @@ public static class Extensions
         return entry.References.Any(r => 
             r.TargetEntry != null && 
             r.TargetEntry.Metadata.IsOwned() && 
-            r.TargetEntry.State is EntityState.Added or EntityState.Modified);
+            r.TargetEntry.State is EntityState.Modified);
     }
 
     public static string? GetUserId(this HttpContext? httpContext)

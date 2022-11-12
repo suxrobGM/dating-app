@@ -1,3 +1,4 @@
+using Dating.DbMigrator.Models;
 using Dating.Domain.Entities;
 using Dating.Domain.Shared.Enums;
 using Dating.Infrastructure.EF.Data;
@@ -8,35 +9,42 @@ namespace Dating.DbMigrator.Services;
 
 internal class SeedDataService : BackgroundService
 {
+    private DatabaseContext _databaseContext = null!;
+    private RoleManager<AppRole> _roleManager = null!;
+    private UserManager<User> _userManager = null!;
+    private readonly IConfiguration _configuration;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<SeedDataService> _logger;
-    private readonly IServiceScopeFactory _serviceScopeFactory;
 
     public SeedDataService(
-        ILogger<SeedDataService> logger,
-        IServiceScopeFactory serviceScopeFactory)
+        IConfiguration configuration,
+        IServiceScopeFactory scopeFactory,
+        ILogger<SeedDataService> logger)
     {
+        _configuration = configuration;
+        _scopeFactory = scopeFactory;
         _logger = logger;
-        _serviceScopeFactory = serviceScopeFactory;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
         {
-            using var scope = _serviceScopeFactory.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-
             _logger.LogInformation("Initializing database...");
-            await MigrateDatabaseAsync(dbContext);
+            
+            using var scope = _scopeFactory.CreateScope();
+            _databaseContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            _roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+            _userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
+            await MigrateDatabaseAsync();
             _logger.LogInformation("Successfully initialized the database");
 
             _logger.LogInformation("Seeding data...");
-            await AddAppRolesAsync(scope.ServiceProvider);
-            await AddSuperAdminAsync(scope.ServiceProvider);
+            await AddAppRolesAsync();
+            await AddSuperAdminAsync();
+            await AddInterests();
             _logger.LogInformation("Successfully seeded databases");
-
-            // var populateTestData = new PopulateTestData(_logger, scope.ServiceProvider);
-            // await populateTestData.ExecuteAsync();
             _logger.LogInformation("Finished all operations!");
         }
         catch (Exception ex)
@@ -45,14 +53,13 @@ internal class SeedDataService : BackgroundService
         }
     }
 
-    private async Task MigrateDatabaseAsync(DbContext databaseContext)
+    private async Task MigrateDatabaseAsync()
     {
-        await databaseContext.Database.MigrateAsync();
+        await _databaseContext.Database.MigrateAsync();
     }
 
-    private async Task AddAppRolesAsync(IServiceProvider serviceProvider)
+    private async Task AddAppRolesAsync()
     {
-        var roleManager = serviceProvider.GetRequiredService<RoleManager<AppRole>>();
         var appRoles = AppRoles.GetValues();
 
         foreach (var appRole in appRoles)
@@ -62,47 +69,65 @@ internal class SeedDataService : BackgroundService
                 DisplayName = appRole.DisplayName
             };
 
-            var roleExists = await roleManager.RoleExistsAsync(role.Name!);
+            var roleExists = await _roleManager.RoleExistsAsync(role.Name!);
             if (roleExists)
                 continue;
             
-            var result = await roleManager.CreateAsync(role);
+            var result = await _roleManager.CreateAsync(role);
 
             if (result.Succeeded)
                 _logger.LogInformation("Added the '{RoleName}' role", appRole.Value);
         }
     }
 
-    private async Task AddSuperAdminAsync(IServiceProvider serviceProvider)
+    private async Task AddSuperAdminAsync()
     {
-        var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-        var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-
-        var userData = configuration.GetSection("SuperAdmin").Get<UserDto>()!;
-        var superAdmin = await userManager.FindByEmailAsync(userData.Email!);
+        var userData = _configuration.GetSection("SuperAdmin").Get<UserDto>()!;
+        var superAdmin = await _userManager.FindByEmailAsync(userData.Email!);
         
         if (superAdmin is null)
         {
-            superAdmin = new User
+            superAdmin = new User(userData.Email!)
             {
-                UserName = userData.UserName,
-                Email = userData.Email,
-                EmailConfirmed = true
+                FirstName = userData.FirstName,
+                LastName = userData.LastName,
+                EmailConfirmed = true,
+                Profile = new Profile
+                {
+                    IsVerified = true
+                }
             };
 
-            var result = await userManager.CreateAsync(superAdmin, userData.Password!);
+            var result = await _userManager.CreateAsync(superAdmin, userData.Password!);
             if (!result.Succeeded)
                 throw new Exception(result.Errors.First().Description);
 
             _logger.LogInformation("Created the super admin '{Admin}'", superAdmin.UserName);
         }
 
-        var hasSuperAdminRole = await userManager.IsInRoleAsync(superAdmin, AppRoles.SuperAdmin);
+        var hasSuperAdminRole = await _userManager.IsInRoleAsync(superAdmin, AppRoles.SuperAdmin);
         
         if (!hasSuperAdminRole)
         {
-            await userManager.AddToRoleAsync(superAdmin, AppRoles.SuperAdmin);
+            await _userManager.AddToRoleAsync(superAdmin, AppRoles.SuperAdmin);
             _logger.LogInformation("Added 'app.super_admin' role to the user '{Admin}'", superAdmin.UserName);
         }
+    }
+
+    private async Task AddInterests()
+    {
+        var interests = _configuration.GetSection("Interests").Get<string[]>();
+
+        if (interests == null)
+            return;
+        
+        _logger.LogInformation("Adding user interests");
+        foreach (var interest in interests)
+        {
+            _databaseContext.Set<Interest>().Add(new Interest(interest));
+            _logger.LogInformation("Added {Interest}", interest);
+        }
+
+        await _databaseContext.SaveChangesAsync();
     }
 }

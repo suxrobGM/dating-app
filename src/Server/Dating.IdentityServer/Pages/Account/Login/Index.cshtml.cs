@@ -1,3 +1,4 @@
+#nullable enable
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -87,11 +88,11 @@ public class Index : PageModel
 
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberLogin,
+            var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberLogin,
                 lockoutOnFailure: true);
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByNameAsync(Input.Username);
+                var user = await _userManager.FindByNameAsync(Input.Email);
                 await _events.RaiseAsync(new UserLoginSuccessEvent(user?.UserName, user?.Id, user?.UserName,
                     clientId: context?.Client.ClientId));
 
@@ -113,18 +114,17 @@ public class Index : PageModel
                 {
                     return Redirect(Input.ReturnUrl);
                 }
-                else if (string.IsNullOrEmpty(Input.ReturnUrl))
+
+                if (string.IsNullOrEmpty(Input.ReturnUrl))
                 {
                     return Redirect("~/");
                 }
-                else
-                {
-                    // user might have clicked on a malicious link - should be logged
-                    throw new Exception("invalid return URL");
-                }
+
+                // user might have clicked on a malicious link - should be logged
+                throw new Exception("invalid return URL");
             }
 
-            await _events.RaiseAsync(new UserLoginFailureEvent(Input.Username, "invalid credentials",
+            await _events.RaiseAsync(new UserLoginFailureEvent(Input.Email, "invalid credentials",
                 clientId: context?.Client.ClientId));
             ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
         }
@@ -154,7 +154,7 @@ public class Index : PageModel
                 EnableLocalLogin = local,
             };
 
-            Input.Username = context!.LoginHint;
+            Input.Email = context!.LoginHint;
 
             if (!local)
             {

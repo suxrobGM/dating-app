@@ -112,7 +112,7 @@ public class Callback : PageModel
     {
         var sub = Guid.NewGuid().ToString();
 
-        var user = new User
+        var user = new User(sub)
         {
             Id = sub,
             UserName = sub, // don't need a username, since the user will be using an external provider to login

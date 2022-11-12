@@ -9,7 +9,7 @@ public class Profile : AuditableEntity
     public string? School { get; set; }
     public string? JobTitle { get; set; }
     public string? Company { get; set; }
-    public string? LivingIn { get; set; }
+    public string? LivingCity { get; set; }
     public bool IsVerified { get; set; }
     
     public virtual ProfilePhoto? MainPhoto { get; set; }

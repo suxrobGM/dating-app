@@ -1,9 +1,17 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Identity;
 
 namespace Dating.Domain.Entities;
 
 public class User : IdentityUser, IAggregateRoot
 {
+    [SuppressMessage("ReSharper", "VirtualMemberCallInConstructor")]
+    public User(string email)
+    {
+        Email = email;
+        UserName = email;
+    }
+
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public Gender Gender { get; set; }
