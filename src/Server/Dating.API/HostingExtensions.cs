@@ -13,7 +13,6 @@ internal static class HostingExtensions
     {
         builder.Services.AddApplicationLayer();
         builder.Services.AddInfrastructureLayer(builder.Configuration);
-        builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>

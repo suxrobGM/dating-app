@@ -31,16 +31,13 @@ internal class CreateAccountHandler : IRequestHandler<CreateAccountCommand, Resp
             Profile = profile,
         };
 
-        await AddInterests(user, request.Interests);
+        await AddInterests(user, request.Interests!);
         await _userManager.CreateAsync(user, request.Password!);
         return ResponseResult.CreateSuccess();
     }
 
-    private async Task AddInterests(User user, string[]? interests)
+    private async Task AddInterests(User user, IEnumerable<string> interests)
     {
-        if (interests == null)
-            return;
-        
         var normalizedInterests = interests.Select(i => i.ToUpper()).ToArray();
         var fetchedInterests = await _repository.GetListAsync<Interest>(i => normalizedInterests.Contains(i.NormalizedName));
         user.Interests = fetchedInterests;

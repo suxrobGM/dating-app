@@ -5,16 +5,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Dating.WebApi/Dating.WebApi.csproj", "Dating.WebApi/"]
-RUN dotnet restore "Dating.WebApi/Dating.WebApi.csproj"
+COPY ["Dating.API/Dating.API.csproj", "Dating.API/"]
+RUN dotnet restore "Dating.API/Dating.API.csproj"
 COPY . .
-WORKDIR "/src/Dating.WebApi"
-RUN dotnet build "Dating.WebApi.csproj" -c Release -o /app/build
+WORKDIR "/src/Dating.API"
+RUN dotnet build "Dating.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Dating.WebApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "Dating.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Dating.WebApi.dll"]
+ENTRYPOINT ["dotnet", "Dating.API.dll"]

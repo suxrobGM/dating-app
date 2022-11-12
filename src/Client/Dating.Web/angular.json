@@ -28,7 +28,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css"
             ],
             "scripts": []
           },
@@ -74,6 +78,9 @@
             "development": {
               "browserTarget": "dating-web:build:development"
             }
+          },
+          "options": {
+            "port": 7003
           },
           "defaultConfiguration": "development"
         },
