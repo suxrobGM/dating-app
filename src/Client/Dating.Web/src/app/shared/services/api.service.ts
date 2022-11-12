@@ -1,18 +1,15 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MessageService} from 'primeng/api';
-import {PutObjectCommand, S3Client} from '@aws-sdk/client-s3';
-import {v4 as uuid} from 'uuid';
 import {AppConfig} from '@configs';
 import {catchError, Observable, of} from 'rxjs';
-import {Account, Media, ResponseResult} from '@shared/models';
+import {Account, ResponseResult} from '../models';
 
 
 @Injectable()
 export class ApiService {
   private readonly host = AppConfig.apiHost;
   private readonly headers: Record<string, string>;
-  private readonly blob: S3Client;
 
   constructor(
     private httpClient: HttpClient,
@@ -20,37 +17,6 @@ export class ApiService {
     this.headers = {
       'content-type': 'application/json',
     };
-
-    this.blob = new S3Client({
-      credentials: {
-        accessKeyId: AppConfig.storage.keyId,
-        secretAccessKey: AppConfig.storage.keySecret,
-      },
-    });
-  }
-
-  async uploadImage(file: File): Promise<ResponseResult<Media>> {
-    const fileName = `img/${this.generateId()}.jpg`;
-
-    const params = {
-      Bucket: AppConfig.storage.bucketName,
-      Key: fileName,
-      ContentType: file.type,
-    };
-
-    try {
-      await this.blob.send(new PutObjectCommand(params));
-      return {
-        success: true,
-        value: {
-          url: `${AppConfig.storage.bucketUrl}/img/${fileName}`,
-          contentType: file.type,
-        },
-      };
-    } catch (error) {
-      console.error(`Could not upload image: ${error}`);
-      return {success: false};
-    }
   }
 
   createAccount(account: Account): Observable<ResponseResult> {
@@ -68,10 +34,6 @@ export class ApiService {
     } else {
       return sortField;
     }
-  }
-
-  private generateId(): string {
-    return uuid().replace('-', '');
   }
 
   private handleError(responseData: any): Observable<ErrorResult> {

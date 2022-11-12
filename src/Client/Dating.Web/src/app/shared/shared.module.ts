@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ApiService} from './services';
+import {ApiService, BlobService} from './services';
 
 
 @NgModule({
@@ -10,6 +10,7 @@ import {ApiService} from './services';
   ],
   providers: [
     ApiService,
+    BlobService,
   ],
 })
 export class SharedModule { }
