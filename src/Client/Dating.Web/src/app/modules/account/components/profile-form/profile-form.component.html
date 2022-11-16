@@ -1,0 +1,26 @@
+<div class="formgrid grid">
+  <div class="field col-12 md:col-6">
+    <label for="firstName">First Name</label>
+    <input name="firstName" type="text" class="w-full" pInputText>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="lastName">Last Name</label>
+    <input name="lastName" type="text" class="w-full" pInputText>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="gender">Gender</label>
+    <p-dropdown [options]="genderValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="birthdate">Birthdate</label>
+    <p-calendar styleClass="w-full"></p-calendar>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="livingCity">Living City</label>
+    <input name="livingCity" type="text" class="w-full" pInputText>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="orientation">Sexual Orientation</label>
+    <p-dropdown [options]="orientationValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
+  </div>
+</div>

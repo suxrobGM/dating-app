@@ -1,17 +1,17 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CreateAccountComponent} from './create-account.component';
+import {GeneralFormComponent} from './general-form.component';
 
-describe('CreateAccountComponent', () => {
-  let component: CreateAccountComponent;
-  let fixture: ComponentFixture<CreateAccountComponent>;
+describe('GeneralFormComponent', () => {
+  let component: GeneralFormComponent;
+  let fixture: ComponentFixture<GeneralFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateAccountComponent],
+      declarations: [GeneralFormComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CreateAccountComponent);
+    fixture = TestBed.createComponent(GeneralFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

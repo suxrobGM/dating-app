@@ -1,6 +1,5 @@
-import {Gender} from './gender';
+import {Gender, SexualOrientation} from '../types';
 import {Interest} from './interest';
-import {SexualOrientation} from './sexualOrientation';
 
 export interface Account {
   email: string;

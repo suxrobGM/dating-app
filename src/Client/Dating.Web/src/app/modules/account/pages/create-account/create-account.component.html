@@ -1,1 +1,28 @@
-<p>create-account works!</p>
+<div class="grid justify-content-center align-items-center">
+  <div class="col-12 md:col-8">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex justify-content-center">
+          <h3>Create an account</h3>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="content">
+        <p-steps [model]="registrationSteps" [readonly]="true"></p-steps>
+        <div class="mt-2">
+          <router-outlet></router-outlet>
+        </div>
+
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="flex justify-content-between">
+          <button pButton type="button" class="p-button-raised mt-3" (click)="back()" [disabled]="!canGoBack()">
+            Back
+          </button>
+          <button pButton type="button" class="p-button-raised mt-3" (click)="next()" [disabled]="!canGoNext()">
+            Next
+          </button>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>
