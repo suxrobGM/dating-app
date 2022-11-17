@@ -1,7 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {GeneralFormComponent, PhotoFormComponent, ProfileFormComponent} from './components';
 import {CreateAccountComponent} from './pages';
+import {
+  GeneralFormComponent,
+  PhotoFormComponent,
+  ProfileFormComponent,
+} from './components';
 
 const rootRoutes: Routes = [
   {

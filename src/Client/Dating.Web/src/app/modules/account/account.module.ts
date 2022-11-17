@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {SharedModule} from '@shared/index';
 import {CreateAccountComponent} from './pages';
 import {AccountRoutingModule} from './account-routing.module';
-import {SharedModule} from '@shared/index';
 import {PrimengModule} from './primeng.module';
 import {
   GeneralFormComponent,
+  InterestsFormComponent,
   PhotoFormComponent,
   ProfileFormComponent,
 } from './components';
@@ -15,6 +16,7 @@ import {
   declarations: [
     CreateAccountComponent,
     GeneralFormComponent,
+    InterestsFormComponent,
     PhotoFormComponent,
     ProfileFormComponent,
   ],

@@ -1,23 +1,24 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Dating.Application.Contracts.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Dating.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AccountController : ControllerBase
+public class InterestController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public AccountController(IMediator mediator)
+    public InterestController(IMediator mediator)
     {
         _mediator = mediator;
     }
     
-    [HttpPost("create")]
+    [HttpGet("list")]
     [AllowAnonymous]
-    [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseResult<InterestDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create([FromBody] CreateAccountCommand request)
+    public async Task<IActionResult> GetList([FromBody] CreateAccountCommand request)
     {
         var result = await _mediator.Send(request);
 

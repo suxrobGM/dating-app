@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Interest} from '@shared/models';
 
 @Component({
   selector: 'app-interests-form',
@@ -6,6 +7,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./interests-form.component.scss'],
 })
 export class InterestsFormComponent implements OnInit {
+  public interests: Interest[] = [];
+
   constructor() { }
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { EnumType, Gender, SexualOrientation } from '@shared/types';
-import { EnumUtils } from '@shared/utils';
+import {EnumType, Gender, SexualOrientation} from '@shared/types';
+import {EnumUtils} from '@shared/utils';
 
 @Component({
   selector: 'app-profile-form',

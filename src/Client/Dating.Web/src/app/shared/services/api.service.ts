@@ -3,7 +3,12 @@ import {Injectable} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {AppConfig} from '@configs';
 import {catchError, Observable, of} from 'rxjs';
-import {Account, ResponseResult} from '../models';
+import {
+  Account,
+  Interest,
+  PagedResponseResult,
+  ResponseResult,
+} from '../models';
 
 
 @Injectable()
@@ -25,6 +30,14 @@ export class ApiService {
 
     return this.httpClient
         .post<ResponseResult>(url, body, {headers: this.headers})
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  getInterestsList(): Observable<PagedResponseResult<Interest>> {
+    const url = `${this.host}/account/create`;
+
+    return this.httpClient
+        .get<PagedResponseResult<Interest>>(url)
         .pipe(catchError((err) => this.handleError(err)));
   }
 

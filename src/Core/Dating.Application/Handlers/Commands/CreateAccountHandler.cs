@@ -30,8 +30,7 @@ internal class CreateAccountHandler : IRequestHandler<CreateAccountCommand, Resp
             Gender = request.Gender,
             Profile = profile,
         };
-
-        await AddInterests(user, request.Interests!);
+        
         await _userManager.CreateAsync(user, request.Password!);
         return ResponseResult.CreateSuccess();
     }

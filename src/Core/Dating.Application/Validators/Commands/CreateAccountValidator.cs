@@ -10,6 +10,5 @@ internal class CreateAccountValidator : AbstractValidator<CreateAccountCommand>
         RuleFor(i => i.LastName).NotEmpty().Length(2, 32);
         RuleFor(i => i.LivingCity).NotEmpty().Length(2, 32);
         RuleFor(i => i.MainPhotoUrl).NotEmpty();
-        RuleFor(i => i.Interests).NotNull().Must(i => i is { Length: > 0 and < 6 });
     }
 }
