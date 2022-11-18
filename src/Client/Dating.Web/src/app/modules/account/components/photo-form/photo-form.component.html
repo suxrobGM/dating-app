@@ -1,7 +1,6 @@
-<div>
+<form [formGroup]="form" (ngSubmit)="submit()">
   <p-fileUpload
     #fileUploader
-    name="profilePhoto" 
     styleClass="my-2"
     mode="basic"
     accept="image/*"
@@ -11,8 +10,18 @@
     (uploadHandler)="imageUploadHandler($event)">
   </p-fileUpload>
   
+  <input type="hidden" formControlName="profilePhoto" />
+
   <div class="flex justify-content-center">
     <img class="img-fluid" [src]="croppedImage" />
   </div>
   
-</div>
+  <div class="flex justify-content-between">
+    <button pButton type="button" class="p-button-raised mt-3" (click)="prevPage()">
+      Back
+    </button>
+    <button pButton type="submit" class="p-button-raised mt-3" (click)="submit()">
+      Submit
+    </button>
+  </div>
+</form>

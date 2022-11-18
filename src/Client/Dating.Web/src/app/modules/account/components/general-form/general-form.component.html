@@ -1,16 +1,38 @@
-<div class="formgrid">
+<form class="formgrid" [formGroup]="form" (ngSubmit)="nextPage()">
   <div class="field col-12 md:col-6">
     <label for="email">Email</label>
-    <input name="email" type="email" class="w-full" pInputText placeholder="john@gmail.com">
+    <input pInputText
+      name="email"
+      formControlName="email"
+      type="email"
+      class="w-full" 
+      placeholder="john@gmail.com">
   </div>
   <div class="field col-12 md:col-6">
     <label for="password">Password</label>
-    <p-password name="password" [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full" placeholder="Capital letter, numbers and symbols">
+    <p-password 
+      name="password"
+      formControlName="password"
+      [toggleMask]="true"
+      styleClass="w-full" 
+      inputStyleClass="w-full" 
+      placeholder="Must include upper and lower case letters, numbers and symbols"
+      [strongRegex]="passwordPattern">
     </p-password>
   </div>
   <div class="field col-12 md:col-6">
     <label for="confirmPassword">Confirm Password</label>
-    <p-password name="confirmPassword" styleClass="w-full" inputStyleClass="w-full">
+    <p-password 
+      name="confirmPassword" 
+      formControlName="confirmPassword" 
+      styleClass="w-full" 
+      inputStyleClass="w-full"
+      [feedback]="false">
     </p-password>
   </div>
-</div>
+
+  <div class="flex justify-content-between">
+    <div></div>
+    <button pButton type="submit" class="p-button-raised mt-3">Next</button>
+  </div>
+</form>

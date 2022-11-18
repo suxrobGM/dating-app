@@ -10,8 +10,6 @@ import {MenuItem} from 'primeng/api';
 })
 export class CreateAccountComponent implements OnInit {
   public readonly registrationSteps: MenuItem[];
-  private readonly stepsCount: number;
-  private activeStep = 0;
 
   constructor(private router: Router) {
     this.registrationSteps = [
@@ -28,46 +26,13 @@ export class CreateAccountComponent implements OnInit {
         routerLink: 'photo-form',
       },
     ];
-
-    this.stepsCount = this.registrationSteps.length - 1;
   }
 
   ngOnInit(): void {
     const isGeneralForm = this.router.url.endsWith('/general-form');
 
     if (!isGeneralForm) {
-      this.navigateToStep(0);
+      this.router.navigateByUrl(`/account/create/general-form`);
     }
-  }
-
-  next() {
-    if (this.activeStep >= this.stepsCount) {
-      return;
-    }
-
-    this.activeStep++;
-    this.navigateToStep(this.activeStep);
-  }
-
-  back() {
-    if (this.activeStep <= 0) {
-      return;
-    }
-
-    this.activeStep--;
-    this.navigateToStep(this.activeStep);
-  }
-
-  canGoNext(): boolean {
-    return this.activeStep < this.stepsCount;
-  }
-
-  canGoBack(): boolean {
-    return this.activeStep > 0;
-  }
-
-  private navigateToStep(index: number) {
-    const stepLink = this.registrationSteps[index].routerLink;
-    this.router.navigateByUrl(`/account/create/${stepLink}`);
   }
 }

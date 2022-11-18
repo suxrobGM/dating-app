@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
-namespace Dating.API.Controllers;
+﻿namespace Dating.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]

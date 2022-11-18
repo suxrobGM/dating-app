@@ -1,7 +1,4 @@
-﻿using Dating.Application.Contracts.Models;
-using Microsoft.AspNetCore.Authorization;
-
-namespace Dating.API.Controllers;
+﻿namespace Dating.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -18,7 +15,7 @@ public class InterestController : ControllerBase
     [AllowAnonymous]
     [ProducesResponseType(typeof(ResponseResult<InterestDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetList([FromBody] CreateAccountCommand request)
+    public async Task<IActionResult> GetList([FromBody] GetInterestsQuery request)
     {
         var result = await _mediator.Send(request);
 

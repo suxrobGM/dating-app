@@ -11,17 +11,6 @@
         <div class="mt-2">
           <router-outlet></router-outlet>
         </div>
-
-      </ng-template>
-      <ng-template pTemplate="footer">
-        <div class="flex justify-content-between">
-          <button pButton type="button" class="p-button-raised mt-3" (click)="back()" [disabled]="!canGoBack()">
-            Back
-          </button>
-          <button pButton type="button" class="p-button-raised mt-3" (click)="next()" [disabled]="!canGoNext()">
-            Next
-          </button>
-        </div>
       </ng-template>
     </p-card>
   </div>

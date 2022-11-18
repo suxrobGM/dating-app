@@ -1,26 +1,35 @@
-<div class="formgrid grid">
+<form class="formgrid grid" [formGroup]="form" (ngSubmit)="nextPage()">
   <div class="field col-12 md:col-6">
     <label for="firstName">First Name</label>
-    <input name="firstName" type="text" class="w-full" pInputText>
+    <input name="firstName" formControlName="firstName" type="text" class="w-full" pInputText>
   </div>
   <div class="field col-12 md:col-6">
     <label for="lastName">Last Name</label>
-    <input name="lastName" type="text" class="w-full" pInputText>
+    <input name="lastName" formControlName="firstName" type="text" class="w-full" pInputText>
   </div>
   <div class="field col-12 md:col-6">
     <label for="gender">Gender</label>
-    <p-dropdown [options]="genderValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
+    <p-dropdown formControlName="gender" [options]="genderValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
   </div>
   <div class="field col-12 md:col-6">
     <label for="birthdate">Birthdate</label>
-    <p-calendar styleClass="w-full"></p-calendar>
+    <p-calendar formControlName="birthdate" styleClass="w-full"></p-calendar>
   </div>
   <div class="field col-12 md:col-6">
     <label for="livingCity">Living City</label>
-    <input name="livingCity" type="text" class="w-full" pInputText>
+    <input name="livingCity" formControlName="livingCity" type="text" class="w-full" pInputText>
   </div>
   <div class="field col-12 md:col-6">
     <label for="orientation">Sexual Orientation</label>
-    <p-dropdown [options]="orientationValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
+    <p-dropdown formControlName="orientation" [options]="orientationValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
   </div>
-</div>
+
+  <div class="flex justify-content-between w-full">
+    <button pButton type="button" class="p-button-raised mt-3" (click)="prevPage()">
+      Back
+    </button>
+    <button pButton type="submit" class="p-button-raised mt-3">
+      Next
+    </button>
+  </div>
+</form>
