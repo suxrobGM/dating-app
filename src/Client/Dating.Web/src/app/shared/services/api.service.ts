@@ -4,7 +4,7 @@ import {MessageService} from 'primeng/api';
 import {AppConfig} from '@configs';
 import {catchError, Observable, of} from 'rxjs';
 import {
-  Account,
+  CreateAccountCommand,
   Interest,
   PagedResponseResult,
   ResponseResult,
@@ -24,7 +24,7 @@ export class ApiService {
     };
   }
 
-  createAccount(account: Account): Observable<ResponseResult> {
+  createAccount(account: CreateAccountCommand): Observable<ResponseResult> {
     const url = `${this.host}/account/create`;
     const body = JSON.stringify(account);
 

@@ -7,7 +7,9 @@
       type="email"
       class="w-full" 
       placeholder="john@gmail.com">
+      <span class="p-error" *ngIf="emailRequired()">Email address is required</span>
   </div>
+  
   <div class="field col-12 md:col-6">
     <label for="password">Password</label>
     <p-password 
@@ -16,10 +18,20 @@
       [toggleMask]="true"
       styleClass="w-full" 
       inputStyleClass="w-full" 
-      placeholder="Must include upper and lower case letters, numbers and symbols"
+      placeholder="Upper and lower case letters, numbers and symbols"
       [strongRegex]="passwordPattern">
+      <ng-template pTemplate="footer">
+        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+          <li>At least one lowercase</li>
+          <li>At least one uppercase</li>
+          <li>At least one numeric</li>
+          <li>Minimum 8 characters</li>
+        </ul>
+    </ng-template>
     </p-password>
+    <span class="p-error" *ngIf="passwordIncorrect()">Password format is incorrect</span>
   </div>
+
   <div class="field col-12 md:col-6">
     <label for="confirmPassword">Confirm Password</label>
     <p-password 
@@ -29,6 +41,7 @@
       inputStyleClass="w-full"
       [feedback]="false">
     </p-password>
+    <span class="p-error" *ngIf="passwordMismatch()">Does not match with password</span>
   </div>
 
   <div class="flex justify-content-between">

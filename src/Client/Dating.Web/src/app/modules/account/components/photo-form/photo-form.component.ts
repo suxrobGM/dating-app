@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {FileUpload} from 'primeng/fileupload';
 import {NgxPhotoEditorService, Options} from 'ngx-photo-editor';
+import {CreateAccountService} from '@modules/account/shared';
 
 
 @Component({
@@ -18,8 +19,10 @@ export class PhotoFormComponent implements OnInit {
   @ViewChild('fileUploader') fileUploader!: FileUpload;
 
   constructor(
+    private createAccountService: CreateAccountService,
     private photoEditor: NgxPhotoEditorService,
-    private router: Router) {
+    private router: Router)
+  {
     this.photoEditorOptions = {
       autoCropArea: 1,
       imageQuality: 90,
