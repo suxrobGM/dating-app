@@ -1,1 +1,18 @@
-<p>photo-form works!</p>
+<div>
+  <p-fileUpload
+    #fileUploader
+    name="profilePhoto" 
+    styleClass="my-2"
+    mode="basic"
+    accept="image/*"
+    chooseLabel="Upload photo"
+    [auto]="true"
+    [customUpload]="true"
+    (uploadHandler)="imageUploadHandler($event)">
+  </p-fileUpload>
+  
+  <div class="flex justify-content-center">
+    <img class="img-fluid" [src]="croppedImage" />
+  </div>
+  
+</div>

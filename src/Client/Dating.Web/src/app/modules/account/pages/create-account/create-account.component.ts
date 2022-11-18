@@ -29,7 +29,7 @@ export class CreateAccountComponent implements OnInit {
       },
     ];
 
-    this.stepsCount = this.registrationSteps.length;
+    this.stepsCount = this.registrationSteps.length - 1;
   }
 
   ngOnInit(): void {

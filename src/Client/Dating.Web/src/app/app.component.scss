@@ -1,3 +1,15 @@
 .content {
-  padding: 2rem;
+  padding: 0;
+}
+
+@media (min-width: 768px) { 
+  .content {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 992px) { 
+  .content {
+    padding: 2rem;
+  }
 }
