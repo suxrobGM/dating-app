@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import {MessageService} from 'primeng/api';
 import {FileUpload} from 'primeng/fileupload';
 import {NgxPhotoEditorService, Options} from 'ngx-photo-editor';
 import {CreateAccountService} from '@modules/account/shared';
@@ -14,13 +15,14 @@ import {CreateAccountService} from '@modules/account/shared';
 export class PhotoFormComponent implements OnInit {
   private readonly photoEditorOptions: Options;
   public readonly form: FormGroup;
-  public croppedImage?: string;
+  public croppedImage: string | null;
 
   @ViewChild('fileUploader') fileUploader!: FileUpload;
 
   constructor(
     private createAccountService: CreateAccountService,
     private photoEditor: NgxPhotoEditorService,
+    private messageService: MessageService,
     private router: Router)
   {
     this.photoEditorOptions = {
@@ -34,16 +36,26 @@ export class PhotoFormComponent implements OnInit {
     this.form = new FormGroup({
       profilePhoto: new FormControl(''),
     });
+
+    this.croppedImage = null;
   }
 
   ngOnInit(): void {
+    this.croppedImage = this.createAccountService.getMainPhoto()?.base64 ?? null;
   }
 
   imageUploadHandler(event: FileUploadEvent) {
     const imageFile = event.files[0];
 
     this.photoEditor.open(imageFile, this.photoEditorOptions)
-        .subscribe(({base64}) => this.croppedImage = base64);
+        .subscribe(({base64, file}) => {
+          if (!base64) {
+            return;
+          }
+
+          this.createAccountService.setMainPhoto({base64, file});
+          this.croppedImage = base64;
+        });
 
     this.fileUploader.clear();
   }
@@ -52,11 +64,16 @@ export class PhotoFormComponent implements OnInit {
     this.router.navigateByUrl('/account/create/profile-form');
   }
 
-  submit() {
+  async submit() {
+    if (this.croppedImage == null) {
+      this.messageService.add({severity: 'error', key: 'errorMessage', summary: 'Error', detail: 'Please upload photo'});
+      return;
+    }
 
+    await this.createAccountService.submitData();
   }
 }
 
 interface FileUploadEvent {
-  files: File[],
+  files: File[];
 }
