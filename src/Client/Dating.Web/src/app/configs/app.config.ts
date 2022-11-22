@@ -1,12 +1,12 @@
-import {environment} from '../../environments/environment';
+import {environment as env} from '../../environments/environment';
 
 export const AppConfig = {
-  apiHost: environment.endpoints.api,
-  idHost: environment.endpoints.id,
+  apiHost: env.endpoints.api,
+  idHost: env.endpoints.id,
   storage: {
-    bucketName: environment.storage.bucketName,
-    bucketUrl: environment.storage.bucketUrl,
-    keyId: environment.storage.keyId,
-    keySecret: environment.storage.keySecret,
+    bucketName: env.storage.bucketName,
+    bucketUrl: env.storage.bucketUrl,
+    accessKey: env.storage.accessKey,
+    secretKey: env.storage.secretKey,
   },
 };

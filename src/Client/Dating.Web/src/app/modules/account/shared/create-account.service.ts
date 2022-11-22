@@ -38,7 +38,7 @@ export class CreateAccountService {
 
   async submitData() {
     const mainPhoto = this.mainPhoto?.file!;
-    const result = await this.blobService.uploadFile(mainPhoto);
+    const result = await this.blobService.uploadImage(mainPhoto);
 
     console.log(result);
 

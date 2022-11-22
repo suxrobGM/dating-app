@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {PutObjectCommand, PutObjectCommandInput, S3Client} from '@aws-sdk/client-s3';
+import {ListBucketsCommand, PutBucketCorsCommand, PutBucketCorsCommandInput, PutObjectCommand, PutObjectCommandInput, S3Client} from '@aws-sdk/client-s3';
 import {v4 as uuid} from 'uuid';
 import {AppConfig} from '@configs';
 import {Media, ResponseResult} from '../models';
@@ -7,35 +7,55 @@ import {Media, ResponseResult} from '../models';
 
 @Injectable()
 export class BlobService {
-  private readonly bucket: S3Client;
+  private readonly client: S3Client;
+  private readonly bucket: string;
 
   constructor() {
-    this.bucket = new S3Client({
+    this.client = new S3Client({
       region: 'auto',
       endpoint: 'https://f8e76a74146f4459cccd71795ce9195a.r2.cloudflarestorage.com',
       credentials: {
-        accessKeyId: AppConfig.storage.keyId,
-        secretAccessKey: AppConfig.storage.keySecret,
+        accessKeyId: AppConfig.storage.accessKey,
+        secretAccessKey: AppConfig.storage.secretKey,
       },
     });
+
+    this.bucket = AppConfig.storage.bucketName;
   }
 
-  async uploadFile(file: File): Promise<ResponseResult<Media>> {
-    const fileName = `blob/${this.generateId()}`;
+  async uploadImage(file: File): Promise<ResponseResult<Media>> {
+    const fileName = `img/${this.generateId()}.jpg`;
 
+    
+
+    const inputCors: PutBucketCorsCommandInput = {
+      Bucket: this.bucket,
+      CORSConfiguration: {
+        CORSRules: [
+          {
+            AllowedMethods: ['PUT'],
+            AllowedOrigins: ['*'],
+            AllowedHeaders: ['content-type'],
+          },
+        ],
+      },
+    };
+
+    console.log(await this.client.send(new PutBucketCorsCommand(inputCors)));
+    console.log(await this.client.send(new ListBucketsCommand('')));
     const input: PutObjectCommandInput = {
-      Bucket: AppConfig.storage.bucketName,
+      Bucket: this.bucket,
       Body: file,
       Key: fileName,
       ContentType: file.type,
     };
 
     try {
-      await this.bucket.send(new PutObjectCommand(input));
+      await this.client.send(new PutObjectCommand(input));
       return {
         success: true,
         value: {
-          url: `${AppConfig.storage.bucketUrl}/blob/${fileName}`,
+          url: `${AppConfig.storage.bucketUrl}/${fileName}`,
           contentType: file.type,
         },
       };
