@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {CreateAccountService} from '@modules/account/shared';
+import {ApiService} from '@shared/services';
 
 
 @Component({
@@ -15,6 +16,7 @@ export class GeneralFormComponent implements OnInit {
   public readonly form: FormGroup;
 
   constructor(
+    private apiService: ApiService,
     private createAccountService: CreateAccountService,
     private router: Router)
   {
@@ -22,7 +24,10 @@ export class GeneralFormComponent implements OnInit {
     this.passwordRegex = new RegExp(this.passwordPattern);
 
     this.form = new FormGroup({
-      email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+      email: new FormControl('', {
+        validators: Validators.compose([Validators.required, Validators.email, this.checkEmail.bind(this)]),
+        updateOn: 'blur',
+      }),
       password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
       confirmPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
     },
@@ -48,19 +53,26 @@ export class GeneralFormComponent implements OnInit {
     this.router.navigateByUrl('/account/create/profile-form');
   }
 
-  emailRequired(): boolean {
-    const emailControl = this.form.get('email');
-    return emailControl && emailControl.getError('required');
+  hasError(controlName: string, errorType: string): boolean {
+    const control = this.form.get(controlName);
+    return control && control.getError(errorType);
   }
 
-  passwordIncorrect(): boolean {
-    const passwordControl = this.form.get('password');
-    return passwordControl && passwordControl.getError('passwordIncorrect');
-  }
+  private checkEmail(control: AbstractControl): ValidationErrors | null {
+    const email = control.value as string;
 
-  passwordMismatch(): boolean {
-    const confirmPasswordControl = this.form.get('confirmPassword');
-    return confirmPasswordControl && confirmPasswordControl.getError('passwordMismatch');
+    if (!email.includes('@')) {
+      return null;
+    }
+
+    this.apiService.userExists(email)
+        .subscribe((res) => {
+          if (res.success && res.value) {
+            this.form.get('email')?.setErrors({emailExists: true});
+          }
+        });
+
+    return null;
   }
 
   private matchPasswords(control: AbstractControl): ValidationErrors | null {

@@ -2,7 +2,7 @@
 
 namespace Dating.Application.Behaviours;
 
-public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
+internal class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> 
     where TRequest : IRequest<TResponse>
 {
     private readonly ILogger<UnhandledExceptionBehaviour<TRequest, TResponse>> _logger;

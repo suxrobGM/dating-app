@@ -33,6 +33,14 @@ export class ApiService {
         .pipe(catchError((err) => this.handleError(err)));
   }
 
+  userExists(email: string): Observable<ResponseResult<boolean>> {
+    const url = `${this.host}/account/exists?email=${email}`;
+
+    return this.httpClient
+        .get<ResponseResult<boolean>>(url, {headers: this.headers})
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
   getInterestsList(): Observable<PagedResponseResult<Interest>> {
     const url = `${this.host}/account/create`;
 

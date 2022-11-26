@@ -2,7 +2,7 @@
 
 namespace Dating.Application.Handlers.Queries;
 
-public class GetInterestsHandler : IRequestHandler<GetInterestsQuery, PagedResponseResult<InterestDto>>
+internal class GetInterestsHandler : IRequestHandler<GetInterestsQuery, PagedResponseResult<InterestDto>>
 {
     private readonly IRepository _repository;
 

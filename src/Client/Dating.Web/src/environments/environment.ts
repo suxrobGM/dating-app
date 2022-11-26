@@ -9,9 +9,9 @@ export const environment = {
     id: 'https://localhost:7001',
   },
   storage: {
-    bucketName: 'dating-app-bucket',
-    accessKeyId: 'AKIATOZQD5Y2TXAEDS5L',
-    secretAccessKey: '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',
+    bucketName: '<BUCKET_NAME>',
+    accessKeyId: '<ACCESS_KEY>',
+    secretAccessKey: '<SECRET_KEY>',
   },
 };
 

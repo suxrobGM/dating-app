@@ -7,7 +7,12 @@
       type="email"
       class="w-full" 
       placeholder="john@gmail.com">
-      <span class="p-error" *ngIf="emailRequired()">Email address is required</span>
+      <span class="p-error" *ngIf="hasError('email', 'required')">
+        Email address is required
+      </span>
+      <span class="p-error" *ngIf="hasError('email', 'emailExists')">
+        Email address is already taken
+      </span>
   </div>
   
   <div class="field col-12 md:col-6">
@@ -29,7 +34,9 @@
         </ul>
     </ng-template>
     </p-password>
-    <span class="p-error" *ngIf="passwordIncorrect()">Password format is incorrect</span>
+    <span class="p-error" *ngIf="hasError('password', 'passwordIncorrect')">
+      Password format is incorrect
+    </span>
   </div>
 
   <div class="field col-12 md:col-6">
@@ -41,7 +48,9 @@
       inputStyleClass="w-full"
       [feedback]="false">
     </p-password>
-    <span class="p-error" *ngIf="passwordMismatch()">Does not match with password</span>
+    <span class="p-error" *ngIf="hasError('confirmPassword', 'passwordMismatch')">
+      Does not match with password
+    </span>
   </div>
 
   <div class="flex justify-content-between">

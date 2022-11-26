@@ -24,4 +24,18 @@ public class AccountController : ControllerBase
 
         return BadRequest(result);
     }
+    
+    [HttpGet("exists")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(ResponseResult<bool>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Create([FromQuery] UserExistsQuery request)
+    {
+        var result = await _mediator.Send(request);
+
+        if (result.Success)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
 }
