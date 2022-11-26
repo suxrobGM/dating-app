@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ListBucketsCommand, PutBucketCorsCommand, PutBucketCorsCommandInput, PutObjectCommand, PutObjectCommandInput, S3Client} from '@aws-sdk/client-s3';
+import {PutObjectCommand, PutObjectCommandInput, S3Client} from '@aws-sdk/client-s3';
 import {v4 as uuid} from 'uuid';
 import {AppConfig} from '@configs';
 import {Media, ResponseResult} from '../models';
@@ -9,40 +9,24 @@ import {Media, ResponseResult} from '../models';
 export class BlobService {
   private readonly client: S3Client;
   private readonly bucket: string;
+  private readonly bucketUrl: string;
 
   constructor() {
     this.client = new S3Client({
-      region: 'auto',
-      endpoint: 'https://f8e76a74146f4459cccd71795ce9195a.r2.cloudflarestorage.com',
+      region: 'us-east-1',
       credentials: {
-        accessKeyId: AppConfig.storage.accessKey,
-        secretAccessKey: AppConfig.storage.secretKey,
+        accessKeyId: AppConfig.storage.accessKeyId,
+        secretAccessKey: AppConfig.storage.secretAccessKey,
       },
     });
 
     this.bucket = AppConfig.storage.bucketName;
+    this.bucketUrl = `https://${this.bucket}.s3.us-east-1.amazonaws.com`;
   }
 
   async uploadImage(file: File): Promise<ResponseResult<Media>> {
     const fileName = `img/${this.generateId()}.jpg`;
 
-    
-
-    const inputCors: PutBucketCorsCommandInput = {
-      Bucket: this.bucket,
-      CORSConfiguration: {
-        CORSRules: [
-          {
-            AllowedMethods: ['PUT'],
-            AllowedOrigins: ['*'],
-            AllowedHeaders: ['content-type'],
-          },
-        ],
-      },
-    };
-
-    console.log(await this.client.send(new PutBucketCorsCommand(inputCors)));
-    console.log(await this.client.send(new ListBucketsCommand('')));
     const input: PutObjectCommandInput = {
       Bucket: this.bucket,
       Body: file,
@@ -55,7 +39,7 @@ export class BlobService {
       return {
         success: true,
         value: {
-          url: `${AppConfig.storage.bucketUrl}/${fileName}`,
+          url: `${this.bucketUrl}/${fileName}`,
           contentType: file.type,
         },
       };

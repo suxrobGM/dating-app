@@ -5,8 +5,7 @@ export const AppConfig = {
   idHost: env.endpoints.id,
   storage: {
     bucketName: env.storage.bucketName,
-    bucketUrl: env.storage.bucketUrl,
-    accessKey: env.storage.accessKey,
-    secretKey: env.storage.secretKey,
+    accessKeyId: env.storage.accessKeyId,
+    secretAccessKey: env.storage.secretAccessKey,
   },
 };

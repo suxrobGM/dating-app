@@ -42,8 +42,8 @@ export class CreateAccountService {
 
     console.log(result);
 
-    if (result.success) {
-      this.account.profile!.mainPhotoUrl = result.value?.url;
+    if (result.success && this.account.profile) {
+      this.account.profile.mainPhotoUrl = result.value!.url;
       console.log(this.account);
     }
   }

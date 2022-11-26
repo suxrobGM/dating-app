@@ -9,10 +9,9 @@ export const environment = {
     id: 'https://localhost:7001',
   },
   storage: {
-    bucketName: 'dating-blob',
-    bucketUrl: 'https://pub-ee5064af9b004182853494624cb9531b.r2.dev',
-    accessKey: '84ee7b2f7509d1f6ecfb3ad7339ffea7',
-    secretKey: 'e24238bb6a9063c1c94d9be4c3a634b592b2a3026b6e78b513dfa2387c92df6e',
+    bucketName: 'dating-app-bucket',
+    accessKeyId: 'AKIATOZQD5Y2TXAEDS5L',
+    secretAccessKey: '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',
   },
 };
 
