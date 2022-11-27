@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
+import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {MenuItem} from 'primeng/api';
 
 @Component({
@@ -11,7 +12,10 @@ import {MenuItem} from 'primeng/api';
 export class CreateAccountComponent implements OnInit {
   public readonly registrationSteps: MenuItem[];
 
-  constructor(private router: Router) {
+  constructor(
+    private oidcService: OidcSecurityService,
+    private router: Router)
+  {
     this.registrationSteps = [
       {
         label: 'General',
@@ -29,10 +33,23 @@ export class CreateAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkAuthState();
+    this.checkFormStep();
+  }
+
+  private checkFormStep() {
     const isGeneralForm = this.router.url.endsWith('/general-form');
 
     if (!isGeneralForm) {
       this.router.navigateByUrl(`/account/create/general-form`);
     }
+  }
+
+  private checkAuthState() {
+    this.oidcService.isAuthenticated().subscribe((isAuthenticated) => {
+      if (isAuthenticated) {
+        this.router.navigateByUrl('/');
+      }
+    });
   }
 }

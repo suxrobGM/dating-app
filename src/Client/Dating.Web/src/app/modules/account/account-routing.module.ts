@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CreateAccountComponent, LoginComponent} from './pages';
 import {
+  CreateAccountComponent,
+  LoginComponent,
   GeneralFormComponent,
   PhotoFormComponent,
   ProfileFormComponent,
-} from './components';
+} from './pages';
 
 const rootRoutes: Routes = [
   {

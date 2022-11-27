@@ -16,11 +16,14 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.oidcService.isAuthenticated()
-        .subscribe((isAuthenticated) => {
-          if (!isAuthenticated) {
-            this.router.navigateByUrl('/account/login');
-          }
-        });
+    this.checkAuthState();
+  }
+
+  private checkAuthState() {
+    this.oidcService.isAuthenticated().subscribe((isAuthenticated) => {
+      if (!isAuthenticated) {
+        this.router.navigateByUrl('/account/login');
+      }
+    });
   }
 }

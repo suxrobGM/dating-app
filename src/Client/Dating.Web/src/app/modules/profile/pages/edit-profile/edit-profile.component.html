@@ -1,0 +1,11 @@
+<div>
+  <p-tabView (onChange)="changeTab($event)">
+    <p-tabPanel header="Edit Profile"></p-tabPanel>
+    <p-tabPanel header="Profile Photos"></p-tabPanel>
+    <p-tabPanel header="Interests"></p-tabPanel>
+    <p-tabPanel header="Security"></p-tabPanel>
+
+    <router-outlet></router-outlet>
+  </p-tabView>
+  
+</div>
