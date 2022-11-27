@@ -1,1 +1,16 @@
-<p>photos-tab works!</p>
+<p-galleria 
+  [value]="images" 
+  [numVisible]="5" 
+  thumbnailsPosition="left" 
+  verticalThumbnailViewPortHeight="150">
+
+  <ng-template pTemplate="item" let-item>
+    <img [src]="item.src" [alt]="item.alt" class="preview-image" />
+  </ng-template>
+  
+  <ng-template pTemplate="thumbnail" let-item>
+    <div class="grid grid-nogutter justify-content-center">
+      <img [src]="item.src" class="thumbnail" />
+    </div>
+  </ng-template>
+</p-galleria>

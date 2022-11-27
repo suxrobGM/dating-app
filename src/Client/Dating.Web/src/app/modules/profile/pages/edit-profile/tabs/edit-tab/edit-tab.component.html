@@ -1,1 +1,28 @@
-<p>edit-tab works!</p>
+<form class="formgrid grid" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="field col-12 md:col-6">
+    <label for="firstName">First Name</label>
+    <input name="firstName" formControlName="firstName" type="text" class="w-full" pInputText>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="lastName">Last Name</label>
+    <input name="lastName" formControlName="lastName" type="text" class="w-full" pInputText>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="gender">Gender</label>
+    <p-dropdown formControlName="gender" [options]="genderValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="birthdate">Birthdate</label>
+    <p-calendar formControlName="birthdate" styleClass="w-full"></p-calendar>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="livingCity">Living City</label>
+    <input name="livingCity" formControlName="livingCity" type="text" class="w-full" pInputText>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="orientation">Sexual Orientation</label>
+    <p-dropdown formControlName="orientation" [options]="orientationValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
+  </div>
+
+  <button pButton type="submit" class="p-button-raised mt-3" label="Submit"></button>
+</form>

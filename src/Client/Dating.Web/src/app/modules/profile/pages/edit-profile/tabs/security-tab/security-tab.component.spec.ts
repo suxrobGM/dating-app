@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SecurityTabComponent } from './security-tab.component';
+import {SecurityTabComponent} from './security-tab.component';
 
 describe('SecurityTabComponent', () => {
   let component: SecurityTabComponent;
@@ -8,9 +8,8 @@ describe('SecurityTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SecurityTabComponent ]
-    })
-    .compileComponents();
+      declarations: [SecurityTabComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SecurityTabComponent);
     component = fixture.componentInstance;

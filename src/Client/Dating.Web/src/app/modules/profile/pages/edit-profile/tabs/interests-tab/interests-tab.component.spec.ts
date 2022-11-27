@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { InterestsTabComponent } from './interests-tab.component';
+import {InterestsTabComponent} from './interests-tab.component';
 
 describe('InterestsTabComponent', () => {
   let component: InterestsTabComponent;
@@ -8,9 +8,8 @@ describe('InterestsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InterestsTabComponent ]
-    })
-    .compileComponents();
+      declarations: [InterestsTabComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InterestsTabComponent);
     component = fixture.componentInstance;

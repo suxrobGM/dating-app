@@ -6,6 +6,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
 import {FileUploadModule} from 'primeng/fileupload';
 import {TabViewModule} from 'primeng/tabview';
+import {GalleriaModule} from 'primeng/galleria';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import {TabViewModule} from 'primeng/tabview';
     InputTextModule,
     PasswordModule,
     TabViewModule,
+    GalleriaModule,
   ],
 })
 export class PrimengModule { }
