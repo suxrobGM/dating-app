@@ -3,11 +3,11 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class SidebarComponent implements OnInit {
+export class LoginComponent implements OnInit {
   constructor(private oidcService: OidcSecurityService)
   {
   }
@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  logout() {
-    this.oidcService.logoff();
+  login() {
+    this.oidcService.authorize();
   }
 }

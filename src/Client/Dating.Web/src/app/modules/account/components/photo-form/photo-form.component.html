@@ -17,11 +17,18 @@
   </div>
   
   <div class="flex justify-content-between">
-    <button pButton type="button" class="p-button-raised mt-3" (click)="prevPage()">
-      Back
+    <button pButton 
+      type="button" 
+      class="p-button-raised mt-3"
+      label="Back"
+      [disabled]="isBusy" 
+      (click)="prevPage()">
     </button>
-    <button pButton type="submit" class="p-button-raised mt-3">
-      Submit
+    <button pButton 
+      type="submit" 
+      class="p-button-raised mt-3"
+      label="Submit"
+      [disabled]="isBusy">
     </button>
   </div>
 </form>

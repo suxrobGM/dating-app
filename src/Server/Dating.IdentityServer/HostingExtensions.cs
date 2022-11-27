@@ -87,7 +87,7 @@ internal static class HostingExtensions
 
         app.UseStaticFiles();
         app.UseRouting();
-        // app.UseCors(app.Environment.IsDevelopment() ? "AnyCors" : "DefaultCors");
+        app.UseCors(app.Environment.IsDevelopment() ? "AnyCors" : "DefaultCors");
         
         app.UseIdentityServer();
         app.UseAuthorization();

@@ -49,28 +49,28 @@ public class DatabaseContext : IdentityDbContext<User, AppRole, string>
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<AppRole>().ToTable("roles");
-        builder.Entity<IdentityRoleClaim<string>>().ToTable("role_claims");
-        builder.Entity<IdentityUserRole<string>>().ToTable("user_roles");
-        builder.Entity<IdentityUserLogin<string>>().ToTable("user_logins");
-        builder.Entity<IdentityUserClaim<string>>().ToTable("user_claims");
-        builder.Entity<IdentityUserToken<string>>().ToTable("user_tokens");
+        builder.Entity<AppRole>().ToTable("Roles");
+        builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
+        builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
+        builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
+        builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
+        builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
 
         builder.Entity<User>(entity =>
         {
-            entity.ToTable("users");
+            entity.ToTable("Users");
             
             entity.HasMany(m => m.Interests)
                 .WithMany(m => m.Users)
                 .UsingEntity(e =>
                 {
-                    e.ToTable("user_interests");
+                    e.ToTable("UserInterests");
                 });
         });
 
         builder.Entity<Message>(entity =>
         {
-            entity.ToTable("messages");
+            entity.ToTable("Messages");
 
             entity.HasOne(m => m.Sender)
                 .WithMany(m => m.SentMessages)
@@ -83,12 +83,8 @@ public class DatabaseContext : IdentityDbContext<User, AppRole, string>
 
         builder.Entity<Profile>(entity =>
         {
-            entity.ToTable("profiles");
-            
-            entity.HasOne(m => m.MainPhoto)
-                .WithOne()
-                .HasForeignKey<Profile>(m => m.MainPhotoId);
-            
+            entity.ToTable("Profiles");
+
             entity.HasOne(m => m.User)
                 .WithOne(m => m.Profile)
                 .HasForeignKey<Profile>(m => m.UserId);
@@ -96,7 +92,7 @@ public class DatabaseContext : IdentityDbContext<User, AppRole, string>
 
         builder.Entity<ProfilePhoto>(entity =>
         {
-            entity.ToTable("profile_photos");
+            entity.ToTable("ProfilePhotos");
 
             entity.HasOne(m => m.Profile)
                 .WithMany(m => m.Photos)
@@ -109,7 +105,7 @@ public class DatabaseContext : IdentityDbContext<User, AppRole, string>
 
         builder.Entity<Like>(entity =>
         {
-            entity.ToTable("likes");
+            entity.ToTable("Likes");
 
             entity.HasOne(m => m.TargetUser)
                 .WithMany(m => m.ReceivedLikes)
@@ -119,18 +115,18 @@ public class DatabaseContext : IdentityDbContext<User, AppRole, string>
                 .WithMany(m => m.LikedUsers)
                 .UsingEntity(e =>
                 {
-                    e.ToTable("user_likes");
+                    e.ToTable("UserLikes");
                 });
         });
 
         builder.Entity<Interest>(entity =>
         {
-            entity.ToTable("interests");
+            entity.ToTable("Interests");
         });
         
         builder.Entity<Media>(entity =>
         {
-            entity.ToTable("media");
+            entity.ToTable("Media");
         });
     }
 }

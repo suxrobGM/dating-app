@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {PutObjectCommand, PutObjectCommandInput, S3Client} from '@aws-sdk/client-s3';
+import {DeleteObjectCommand, DeleteObjectCommandInput, PutObjectCommand, PutObjectCommandInput, S3Client} from '@aws-sdk/client-s3';
 import {v4 as uuid} from 'uuid';
 import {AppConfig} from '@configs';
 import {Media, ResponseResult} from '../models';
@@ -51,6 +51,32 @@ export class BlobService {
         error: `Could not upload file: ${error}`,
       };
     }
+  }
+
+  async removeFile(fileUrl: string): Promise<ResponseResult> {
+    const fileKey = this.parseFileKey(fileUrl);
+
+    const input: DeleteObjectCommandInput = {
+      Bucket: this.bucket,
+      Key: fileKey,
+    };
+
+    try {
+      await this.client.send(new DeleteObjectCommand(input));
+      return {success: true};
+    }
+    catch (error) {
+      console.error(`Could not delete file from S3: ${error}`);
+      return {
+        success: false,
+        error: error as string,
+      };
+    }
+  }
+
+  private parseFileKey(url: string): string {
+    const fileKey = new URL(url).pathname.substring(1);
+    return fileKey;
   }
 
   private generateId(): string {

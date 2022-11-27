@@ -2,6 +2,12 @@
 
 public class Media : AuditableEntity
 {
-    public string? Url { get; set; }
-    public string? ContentType { get; set; }
+    public Media(string url, string contentType)
+    {
+        Url = url;
+        ContentType = contentType;
+    }
+    
+    public string Url { get; set; }
+    public string ContentType { get; set; }
 }

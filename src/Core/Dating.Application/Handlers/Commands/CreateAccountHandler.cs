@@ -17,11 +17,20 @@ internal class CreateAccountHandler : IRequestHandler<CreateAccountCommand, Resp
     
     public async Task<ResponseResult> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
     {
+        var mainPhoto = new ProfilePhoto
+        {
+            Photo = new Media(request.MainPhotoUrl!, "image/jpeg"),
+            IsMainPhoto = true
+        };
+        
         var profile = new Profile
         {
             LivingCity = request.LivingCity,
-            Orientation = request.Orientation,
+            Orientation = request.Orientation
         };
+        
+        profile.SetMainPhoto(mainPhoto);
+
         var user = new User(request.Email!)
         {
             FirstName = request.FirstName,

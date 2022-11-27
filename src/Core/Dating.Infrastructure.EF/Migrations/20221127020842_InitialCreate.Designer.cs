@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dating.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221111235738_Initial")]
-    partial class Initial
+    [Migration("20221127020842_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace Dating.Infrastructure.EF.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("roles", (string)null);
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Dating.Domain.Entities.Interest", b =>
@@ -85,7 +85,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("interests", (string)null);
+                    b.ToTable("Interests", (string)null);
                 });
 
             modelBuilder.Entity("Dating.Domain.Entities.Like", b =>
@@ -112,7 +112,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasIndex("TargetUserId");
 
-                    b.ToTable("likes", (string)null);
+                    b.ToTable("Likes", (string)null);
                 });
 
             modelBuilder.Entity("Dating.Domain.Entities.Media", b =>
@@ -121,6 +121,7 @@ namespace Dating.Infrastructure.EF.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ContentType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
@@ -136,11 +137,12 @@ namespace Dating.Infrastructure.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("media", (string)null);
+                    b.ToTable("Media", (string)null);
                 });
 
             modelBuilder.Entity("Dating.Domain.Entities.Message", b =>
@@ -184,7 +186,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("messages", (string)null);
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("Dating.Domain.Entities.Profile", b =>
@@ -219,9 +221,6 @@ namespace Dating.Infrastructure.EF.Migrations
                     b.Property<string>("LivingCity")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MainPhotoId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Orientation")
                         .HasColumnType("int");
 
@@ -233,15 +232,11 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MainPhotoId")
-                        .IsUnique()
-                        .HasFilter("[MainPhotoId] IS NOT NULL");
-
                     b.HasIndex("UserId")
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
 
-                    b.ToTable("profiles", (string)null);
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("Dating.Domain.Entities.ProfilePhoto", b =>
@@ -254,6 +249,9 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsMainPhoto")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
@@ -275,7 +273,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasIndex("ProfileId");
 
-                    b.ToTable("profile_photos", (string)null);
+                    b.ToTable("ProfilePhotos", (string)null);
                 });
 
             modelBuilder.Entity("Dating.Domain.Entities.User", b =>
@@ -355,7 +353,7 @@ namespace Dating.Infrastructure.EF.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("InterestUser", b =>
@@ -370,7 +368,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("user_interests", (string)null);
+                    b.ToTable("UserInterests", (string)null);
                 });
 
             modelBuilder.Entity("LikeUser", b =>
@@ -385,7 +383,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("user_likes", (string)null);
+                    b.ToTable("UserLikes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -410,7 +408,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("role_claims", (string)null);
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -435,7 +433,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_claims", (string)null);
+                    b.ToTable("UserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -457,7 +455,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_logins", (string)null);
+                    b.ToTable("UserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -472,7 +470,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("user_roles", (string)null);
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -491,7 +489,7 @@ namespace Dating.Infrastructure.EF.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("user_tokens", (string)null);
+                    b.ToTable("UserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Dating.Domain.Entities.Like", b =>
@@ -520,15 +518,9 @@ namespace Dating.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("Dating.Domain.Entities.Profile", b =>
                 {
-                    b.HasOne("Dating.Domain.Entities.ProfilePhoto", "MainPhoto")
-                        .WithOne()
-                        .HasForeignKey("Dating.Domain.Entities.Profile", "MainPhotoId");
-
                     b.HasOne("Dating.Domain.Entities.User", "User")
                         .WithOne("Profile")
                         .HasForeignKey("Dating.Domain.Entities.Profile", "UserId");
-
-                    b.Navigation("MainPhoto");
 
                     b.Navigation("User");
                 });

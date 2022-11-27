@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Account, Profile} from '@shared/models';
 import {ApiService, BlobService} from '@shared/services';
+import {lastValueFrom} from 'rxjs';
+
 
 @Injectable()
 export class CreateAccountService {
@@ -36,16 +38,39 @@ export class CreateAccountService {
     return this.mainPhoto;
   }
 
-  async submitData() {
+  async submitData(): Promise<boolean> {
     const mainPhoto = this.mainPhoto?.file!;
-    const result = await this.blobService.uploadImage(mainPhoto);
+    const uploadResult = await this.blobService.uploadImage(mainPhoto);
+    const account = this.account;
+    const profile = this.account.profile;
 
-    console.log(result);
-
-    if (result.success && this.account.profile) {
-      this.account.profile.mainPhotoUrl = result.value!.url;
-      console.log(this.account);
+    if (uploadResult.success === false || profile == null) {
+      return false;
     }
+
+    profile.mainPhotoUrl = uploadResult.value!.url;
+
+    const command = {
+      email: account.email,
+      password: account.password!,
+      firstName: profile.firstName!,
+      lastName: profile.firstName!,
+      birthdate: profile.birthdate!,
+      livingCity: profile.livingCity!,
+      orientation: profile.orientation!,
+      gender: profile.gender!,
+      mainPhotoUrl: profile.mainPhotoUrl!,
+    };
+
+    const result = await lastValueFrom(this.apiService.createAccount(command));
+
+    if (result.success === false) {
+      await this.blobService.removeFile(profile.mainPhotoUrl);
+      return false;
+    }
+
+    console.log(this.account);
+    return true;
   }
 }
 

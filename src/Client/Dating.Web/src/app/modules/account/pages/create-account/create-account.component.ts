@@ -29,10 +29,10 @@ export class CreateAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // const isGeneralForm = this.router.url.endsWith('/general-form');
+    const isGeneralForm = this.router.url.endsWith('/general-form');
 
-    // if (!isGeneralForm) {
-    //   this.router.navigateByUrl(`/account/create/general-form`);
-    // }
+    if (!isGeneralForm) {
+      this.router.navigateByUrl(`/account/create/general-form`);
+    }
   }
 }

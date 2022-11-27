@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {MessageService} from 'primeng/api';
 import {FileUpload} from 'primeng/fileupload';
 import {NgxPhotoEditorService, Options} from 'ngx-photo-editor';
@@ -16,11 +17,13 @@ export class PhotoFormComponent implements OnInit {
   private readonly photoEditorOptions: Options;
   public readonly form: FormGroup;
   public croppedImage: string | null;
+  public isBusy: boolean;
 
   @ViewChild('fileUploader') fileUploader!: FileUpload;
 
   constructor(
     private createAccountService: CreateAccountService,
+    private oidcService: OidcSecurityService,
     private photoEditor: NgxPhotoEditorService,
     private messageService: MessageService,
     private router: Router)
@@ -37,6 +40,7 @@ export class PhotoFormComponent implements OnInit {
       profilePhoto: new FormControl(''),
     });
 
+    this.isBusy = false;
     this.croppedImage = null;
   }
 
@@ -66,11 +70,37 @@ export class PhotoFormComponent implements OnInit {
 
   async submit() {
     if (this.croppedImage == null) {
-      this.messageService.add({severity: 'error', key: 'errorMessage', summary: 'Error', detail: 'Please upload photo'});
+      this.messageService.add({
+        severity: 'error',
+        key: 'formMessage',
+        summary: 'Error',
+        detail: 'Please upload photo',
+      });
       return;
     }
 
-    await this.createAccountService.submitData();
+    this.isBusy = true;
+    const createdAccount = await this.createAccountService.submitData();
+
+    if (createdAccount) {
+      this.messageService.add({
+        severity: 'success',
+        key: 'formMessage',
+        detail: 'Successfully created an account, you will be redirected to login page',
+      });
+
+      this.oidcService.authorize();
+    }
+    else {
+      this.messageService.add({
+        severity: 'error',
+        key: 'formMessage',
+        summary: 'Error',
+        detail: 'Could not create an account',
+      });
+
+      this.isBusy = false;
+    }
   }
 }
 

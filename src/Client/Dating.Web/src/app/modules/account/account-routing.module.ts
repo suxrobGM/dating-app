@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {CreateAccountComponent} from './pages';
+import {CreateAccountComponent, LoginComponent} from './pages';
 import {
   GeneralFormComponent,
   PhotoFormComponent,
@@ -8,6 +8,11 @@ import {
 } from './components';
 
 const rootRoutes: Routes = [
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
   {
     path: 'create',
     component: CreateAccountComponent,
@@ -33,6 +38,10 @@ const rootRoutes: Routes = [
         component: PhotoFormComponent,
       },
     ],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
 ];
 
