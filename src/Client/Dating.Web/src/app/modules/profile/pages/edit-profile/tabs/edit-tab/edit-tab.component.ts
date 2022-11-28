@@ -25,6 +25,10 @@ export class EditTabComponent implements OnInit {
       birthdate: new FormControl('', Validators.required),
       livingCity: new FormControl('', Validators.required),
       orientation: new FormControl(SexualOrientation.Straight, Validators.required),
+      school: new FormControl(''),
+      jobTitle: new FormControl(''),
+      company: new FormControl(''),
+      bio: new FormControl(''),
     });
   }
 

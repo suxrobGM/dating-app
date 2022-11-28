@@ -1,11 +1,6 @@
 ﻿namespace Dating.Application.Contracts.Models;
 
-public class InterestDto
+public record InterestDto(string Name)
 {
-    public InterestDto(string name)
-    {
-        Name = name;
-    }
-    
-    public string Name { get; set; }
+    public string Name { get; set; } = Name;
 }

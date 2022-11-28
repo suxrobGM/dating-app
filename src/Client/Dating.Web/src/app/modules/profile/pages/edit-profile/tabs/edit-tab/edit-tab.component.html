@@ -1,11 +1,11 @@
 <form class="formgrid grid" [formGroup]="form" (ngSubmit)="submit()">
   <div class="field col-12 md:col-6">
     <label for="firstName">First Name</label>
-    <input name="firstName" formControlName="firstName" type="text" class="w-full" pInputText>
+    <input formControlName="firstName" type="text" class="w-full" pInputText>
   </div>
   <div class="field col-12 md:col-6">
     <label for="lastName">Last Name</label>
-    <input name="lastName" formControlName="lastName" type="text" class="w-full" pInputText>
+    <input formControlName="lastName" type="text" class="w-full" pInputText>
   </div>
   <div class="field col-12 md:col-6">
     <label for="gender">Gender</label>
@@ -22,6 +22,26 @@
   <div class="field col-12 md:col-6">
     <label for="orientation">Sexual Orientation</label>
     <p-dropdown formControlName="orientation" [options]="orientationValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="orientation">Sexual Orientation</label>
+    <p-dropdown formControlName="orientation" [options]="orientationValues" styleClass="w-full" optionLabel="displayName" optionValue="value"></p-dropdown>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="school">School</label>
+    <input formControlName="school" type="text" class="w-full" pInputText>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="jobTitle">Job Title</label>
+    <input formControlName="jobTitle" type="text" class="w-full" pInputText>
+  </div>
+  <div class="field col-12 md:col-6">
+    <label for="company">Company</label>
+    <input formControlName="company" type="text" class="w-full" pInputText>
+  </div>
+  <div class="field col-12">
+    <h5>Bio</h5>
+    <textarea formControlName="bio" [rows]="5" [cols]="60" pInputTextarea></textarea>
   </div>
 
   <button pButton type="submit" class="p-button-raised mt-3" label="Submit"></button>

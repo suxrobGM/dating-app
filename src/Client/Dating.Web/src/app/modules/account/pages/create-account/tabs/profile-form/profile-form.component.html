@@ -1,12 +1,12 @@
 <form class="formgrid grid" [formGroup]="form" (ngSubmit)="nextPage()">
   <div class="field col-12 md:col-6">
     <label for="firstName">First Name</label>
-    <input name="firstName" formControlName="firstName" type="text" class="w-full" pInputText>
+    <input formControlName="firstName" type="text" class="w-full" pInputText>
     <span class="p-error" *ngIf="isRequired('firstName')">First name is required</span>
   </div>
   <div class="field col-12 md:col-6">
     <label for="lastName">Last Name</label>
-    <input name="lastName" formControlName="lastName" type="text" class="w-full" pInputText>
+    <input formControlName="lastName" type="text" class="w-full" pInputText>
     <span class="p-error" *ngIf="isRequired('lastName')">Last name is required</span>
   </div>
   <div class="field col-12 md:col-6">
@@ -20,7 +20,7 @@
   </div>
   <div class="field col-12 md:col-6">
     <label for="livingCity">Living City</label>
-    <input name="livingCity" formControlName="livingCity" type="text" class="w-full" pInputText>
+    <input formControlName="livingCity" type="text" class="w-full" pInputText>
     <span class="p-error" *ngIf="isRequired('livingCity')">Living city is required</span>
   </div>
   <div class="field col-12 md:col-6">

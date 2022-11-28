@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Contracts.Commands;
 
-public class CreateAccountCommand : RequestBase<ResponseResult>
+public class CreateAccountCommand : RequestBase
 {
     public string? Email { get; set; }
     public string? Password { get; set; }

@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 import {StepsModule} from 'primeng/steps';
 import {PasswordModule} from 'primeng/password';
 import {DropdownModule} from 'primeng/dropdown';
@@ -16,6 +17,7 @@ import {GalleriaModule} from 'primeng/galleria';
     FileUploadModule,
     StepsModule,
     InputTextModule,
+    InputTextareaModule,
     PasswordModule,
     TabViewModule,
     GalleriaModule,

@@ -2,7 +2,6 @@
   <div class="field col-12 md:col-6">
     <label for="email">Email</label>
     <input pInputText
-      name="email"
       formControlName="email"
       type="email"
       class="w-full" 
@@ -17,8 +16,7 @@
   
   <div class="field col-12 md:col-6">
     <label for="password">Password</label>
-    <p-password 
-      name="password"
+    <p-password
       formControlName="password"
       [toggleMask]="true"
       styleClass="w-full" 
@@ -41,8 +39,7 @@
 
   <div class="field col-12 md:col-6">
     <label for="confirmPassword">Confirm Password</label>
-    <p-password 
-      name="confirmPassword" 
+    <p-password
       formControlName="confirmPassword" 
       styleClass="w-full" 
       inputStyleClass="w-full"
