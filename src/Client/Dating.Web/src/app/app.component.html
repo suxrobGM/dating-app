@@ -4,14 +4,7 @@
   <div *ngIf="isAuthenticated" class="col-3 md:col-3 xl:col-2 p-0">
     <app-sidebar></app-sidebar>
   </div>
-  <div *ngIf="isAuthenticated; else unauthorizedView" class="col-9 md:col-9 xl:col-10 content">
+  <div class="content" [ngClass]="isAuthenticated ? 'col-9 md:col-9 xl:col-10' : 'col-12'">
     <router-outlet></router-outlet>
   </div>
 </div>
-
-<ng-template #unauthorizedView>
-  <div class="content">
-    <router-outlet></router-outlet>
-  </div>
-</ng-template>
-

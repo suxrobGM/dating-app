@@ -29,7 +29,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
+              "src/app/styles/site.scss",
               "node_modules/ngx-photo-editor/photo-editor.css",
               "node_modules/primeflex/primeflex.css",
               "node_modules/primeicons/primeicons.css",
@@ -111,7 +111,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/styles/site.scss"
             ],
             "scripts": []
           }

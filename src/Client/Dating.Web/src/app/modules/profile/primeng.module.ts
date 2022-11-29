@@ -8,6 +8,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {FileUploadModule} from 'primeng/fileupload';
 import {TabViewModule} from 'primeng/tabview';
 import {GalleriaModule} from 'primeng/galleria';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import {GalleriaModule} from 'primeng/galleria';
     PasswordModule,
     TabViewModule,
     GalleriaModule,
+    ProgressSpinnerModule,
   ],
 })
 export class PrimengModule { }

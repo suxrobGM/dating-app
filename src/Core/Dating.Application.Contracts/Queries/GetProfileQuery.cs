@@ -2,5 +2,5 @@
 
 public class GetProfileQuery : RequestBase<ResponseResult<ProfileDto>>
 {
-    public string? UserId { get; set; }
+    public string? Id { get; set; }
 }

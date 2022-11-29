@@ -6,6 +6,8 @@ import {RootModule} from '@modules/root';
 import {SharedModule} from '@shared/index';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {InterecptorsModule} from './interceptors';
+
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import {AppComponent} from './app.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     AuthenticationModule,
+    InterecptorsModule,
     RootModule,
     SharedModule,
   ],

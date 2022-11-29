@@ -11,12 +11,12 @@ public class ProfileController : ControllerBase
         _mediator = mediator;
     }
     
-    [HttpGet("{userId}")]
+    [HttpGet("{id}")]
     [ProducesResponseType(typeof(ResponseResult<ProfileDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetByUserId(string userId)
+    public async Task<IActionResult> GetById(string id)
     {
-        var request = new GetProfileQuery { UserId = userId };
+        var request = new GetProfileQuery { Id = id };
         var result = await _mediator.Send(request);
 
         if (result.Success)
@@ -30,6 +30,7 @@ public class ProfileController : ControllerBase
     [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update(string id, [FromBody] UpdateProfileCommand request)
     {
+        request.Id = id;
         var result = await _mediator.Send(request);
 
         if (result.Success)

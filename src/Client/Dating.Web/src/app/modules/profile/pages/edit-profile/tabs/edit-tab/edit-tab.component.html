@@ -1,4 +1,8 @@
 <form class="formgrid grid" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="col-12">
+    <p-progressSpinner *ngIf="isBusy"></p-progressSpinner>
+  </div>
+  
   <div class="field col-12 md:col-6">
     <label for="firstName">First Name</label>
     <input formControlName="firstName" type="text" class="w-full" pInputText>
@@ -40,9 +44,9 @@
     <input formControlName="company" type="text" class="w-full" pInputText>
   </div>
   <div class="field col-12">
-    <h5>Bio</h5>
+    <div class="mb-2">Bio</div>
     <textarea formControlName="bio" [rows]="5" [cols]="60" pInputTextarea></textarea>
   </div>
 
-  <button pButton type="submit" class="p-button-raised mt-3" label="Submit"></button>
+  <button pButton type="submit" class="p-button-raised mt-3" label="Save"></button>
 </form>

@@ -18,8 +18,6 @@ export class TokenInterceptor implements HttpInterceptor {
     const token = this.userDataService.getAccessToken();
     const headers = {Authorization: ''};
 
-    console.log(`AccessToken: ${token}`);
-    
     if (token == null) {
       return next.handle(request);
     }

@@ -5,17 +5,31 @@ import {UserIdentity} from '@shared/models';
   providedIn: 'root',
 })
 export class UserDataService {
-  private _userData: UserIdentity | null;
+  private userData: UserIdentity | null;
+  private accessToken: string | null;
 
   constructor() {
-    this._userData = null;
+    this.accessToken = null;
+    this.userData = null;
   }
 
-  public setUser(userIdentity: UserIdentity | null) {
-    this._userData = userIdentity;
+  getAccessToken(): string | null {
+    return this.accessToken;
   }
 
-  public getUser(): UserIdentity | null {
-    return this._userData;
+  setAccessToken(accessToken: string) {
+    this.accessToken = accessToken;
+  }
+
+  getUser(): UserIdentity | null {
+    return this.userData;
+  }
+
+  setUser(userIdentity: UserIdentity) {
+    this.userData = userIdentity;
+  }
+
+  getUserId(): string | null {
+    return this.userData?.sub ?? null;
   }
 }

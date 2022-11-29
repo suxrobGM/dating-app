@@ -14,6 +14,16 @@ public class Profile : AuditableEntity
     public virtual User? User { get; set; }
     public virtual List<ProfilePhoto> Photos { get; set; } = new();
 
+    public void AddPhoto(Media photo)
+    {
+        Photos.Add(new ProfilePhoto {Photo = photo});
+    }
+    
+    public ProfilePhoto? GetMainPhoto()
+    {
+        return Photos.FirstOrDefault(i => i.IsMainPhoto);
+    }
+
     public void SetMainPhoto(ProfilePhoto photo)
     {
         foreach (var profilePhoto in Photos)

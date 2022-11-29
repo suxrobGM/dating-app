@@ -7,6 +7,7 @@ import {
   CreateAccountCommand,
   Interest,
   PagedResponseResult,
+  Profile,
   ResponseResult,
 } from '../models';
 
@@ -24,14 +25,8 @@ export class ApiService {
     };
   }
 
-  createAccount(account: CreateAccountCommand): Observable<ResponseResult> {
-    const url = `${this.host}/account/create`;
-    const body = JSON.stringify(account);
 
-    return this.httpClient
-        .post<ResponseResult>(url, body, {headers: this.headers})
-        .pipe(catchError((err) => this.handleError(err)));
-  }
+  // #region Account API
 
   userExists(email: string): Observable<ResponseResult<boolean>> {
     const url = `${this.host}/account/exists?email=${email}`;
@@ -41,13 +36,52 @@ export class ApiService {
         .pipe(catchError((err) => this.handleError(err)));
   }
 
-  getInterestsList(): Observable<PagedResponseResult<Interest>> {
+  createAccount(account: CreateAccountCommand): Observable<ResponseResult> {
     const url = `${this.host}/account/create`;
+    const body = JSON.stringify(account);
+
+    return this.httpClient
+        .post<ResponseResult>(url, body, {headers: this.headers})
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  // #endregion
+
+
+  // #region Interests API
+
+  getInterestsList(): Observable<PagedResponseResult<Interest>> {
+    const url = `${this.host}/interests/list`;
 
     return this.httpClient
         .get<PagedResponseResult<Interest>>(url)
         .pipe(catchError((err) => this.handleError(err)));
   }
+
+  // #endregion
+
+
+  // #region Profile API
+
+  getUserProfile(userId: string): Observable<ResponseResult<Profile>> {
+    const url = `${this.host}/profile/${userId}`;
+
+    return this.httpClient
+        .get<ResponseResult<Profile>>(url)
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  updateProfile(profile: Profile): Observable<ResponseResult> {
+    const url = `${this.host}/profile/update/${profile.id}`;
+    const body = JSON.stringify(profile);
+
+    return this.httpClient
+        .put<ResponseResult>(url, body, {headers: this.headers})
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  // #endregion
+
 
   parseSortProperty(sortField: string = '', sortOrder: SortOrder = 'ascending'): string {
     if (sortOrder === 'descending') {

@@ -5,6 +5,7 @@ import {Media} from './media';
 import {PagedResponseResult} from './pagedResponseResult';
 import {Profile} from './profile';
 import {CreateAccountCommand} from './createAccountCommand';
+import {UserIdentity} from './userIdentity';
 
 export {
   Account,
@@ -14,4 +15,5 @@ export {
   Profile,
   PagedResponseResult,
   ResponseResult,
+  UserIdentity,
 };

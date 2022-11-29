@@ -56,8 +56,8 @@ public static class Config
                 Name = "dating.api",
                 DisplayName = "Dating API",
                 Scopes = {
-                    "logistics.api.admin",
-                    "logistics.api.client"
+                    "dating.api.client",
+                    "dating.api.client"
                 },
                 UserClaims = {
                     CustomClaimTypes.Role, 

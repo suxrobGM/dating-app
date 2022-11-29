@@ -15,6 +15,10 @@ const rootRoutes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
     path: 'create',
     component: CreateAccountComponent,
     data: {
@@ -39,10 +43,6 @@ const rootRoutes: Routes = [
         component: PhotoFormComponent,
       },
     ],
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
   },
 ];
 
