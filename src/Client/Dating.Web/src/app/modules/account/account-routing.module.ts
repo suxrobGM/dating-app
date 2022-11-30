@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {
   CreateAccountComponent,
   LoginComponent,
+  LogoutComponent,
   GeneralFormComponent,
   PhotoFormComponent,
   ProfileFormComponent,
@@ -17,6 +18,10 @@ const rootRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
   },
   {
     path: 'create',

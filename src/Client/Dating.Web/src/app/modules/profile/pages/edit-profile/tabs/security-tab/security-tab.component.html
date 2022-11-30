@@ -1,4 +1,8 @@
 <form class="formgrid" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="col-12">
+    <p-progressSpinner *ngIf="isBusy"></p-progressSpinner>
+  </div>
+  
   <div class="field col-12 md:col-6">
     <label for="email">Email</label>
     <input pInputText
@@ -17,22 +21,20 @@
 
   <div class="field col-12 md:col-6">
     <label for="oldPassword">Old Password</label>
-    <p-password 
-      name="oldPassword" 
+    <p-password
       formControlName="oldPassword" 
       styleClass="w-full" 
       inputStyleClass="w-full"
       [feedback]="false">
     </p-password>
-    <span class="p-error" *ngIf="hasError('oldPassword', 'passwordIncorrect')">
-      Incorrect password
+    <span class="p-error" *ngIf="hasError('oldPassword', 'passwordNotSet')">
+      Specify the old password
     </span>
   </div>
   
   <div class="field col-12 md:col-6">
-    <label for="password">Password</label>
+    <label for="password">New Password</label>
     <p-password 
-      name="password"
       formControlName="password"
       [toggleMask]="true"
       styleClass="w-full" 
@@ -54,9 +56,8 @@
   </div>
 
   <div class="field col-12 md:col-6">
-    <label for="confirmPassword">Confirm Password</label>
+    <label for="confirmPassword">Confirm New Password</label>
     <p-password 
-      name="confirmPassword" 
       formControlName="confirmPassword" 
       styleClass="w-full" 
       inputStyleClass="w-full"
@@ -67,5 +68,5 @@
     </span>
   </div>
 
-  <button pButton type="submit" class="p-button-raised mt-3">Submit</button>
+  <button pButton type="submit" class="p-button-raised mt-3" label="Save"></button>
 </form>

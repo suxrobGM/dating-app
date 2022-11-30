@@ -42,8 +42,9 @@ public class AccountController : ControllerBase
     [HttpPut("update/{id}")]
     [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Update(string id, [FromBody] CreateAccountCommand request)
+    public async Task<IActionResult> Update(string id, [FromBody] UpdateAccountCommand request)
     {
+        request.Id = id;
         var result = await _mediator.Send(request);
 
         if (result.Success)

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MessageService} from 'primeng/api';
-import {Profile} from '@shared/models';
+import {UpdateProfileCommand} from '@shared/models';
 import {ApiService, UserDataService} from '@shared/services';
 import {EnumType, Gender, SexualOrientation} from '@shared/types';
 import {EnumUtils} from '@shared/utils';
@@ -49,7 +49,7 @@ export class EditTabComponent implements OnInit {
     const form = this.form.value;
     const id = this.userDataService.getUserId();
 
-    const profile: Profile = {
+    const profile: UpdateProfileCommand = {
       id: id!,
       firstName: form.firstName,
       lastName: form.lastName,
@@ -88,7 +88,7 @@ export class EditTabComponent implements OnInit {
   }
 
   private fetchUserProfile() {
-    const userId = this.userDataService.getUser()?.sub;
+    const userId = this.userDataService.getUserId();
 
     if (!userId) {
       return;

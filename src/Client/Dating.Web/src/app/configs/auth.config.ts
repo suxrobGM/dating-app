@@ -9,7 +9,7 @@ export const AuthConfig: OpenIdConfiguration = {
   redirectUrl: window.location.origin,
   postLogoutRedirectUri: window.location.origin,
   clientId: 'dating.webclient',
-  scope: 'openid profile offline_access dating.api.client',
+  scope: 'openid profile email full_name picture offline_access dating.api.client',
   responseType: 'code',
   silentRenew: true,
   useRefreshToken: true,

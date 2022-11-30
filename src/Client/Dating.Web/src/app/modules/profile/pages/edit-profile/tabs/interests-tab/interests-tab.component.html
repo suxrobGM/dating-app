@@ -1,8 +1,16 @@
-<div>
-  <h4>Pick up to 5 interests from the list</h4>
-  <div>
-    <span class="chip">Movies</span>
-    <span class="chip">Music</span>
-    <span class="chip chip-selected">Football</span>
+<div class="grid">
+  <div class="col-12">
+    <h4>Pick up to 5 interests from the list</h4>
+  </div>
+
+  <div class="col-12">
+    <p-progressSpinner *ngIf="isBusy"></p-progressSpinner>
+  </div>
+  <div class="col-12">
+    <button pButton 
+    *ngFor="let interest of interests" 
+    class="p-button-danger p-button-outlined p-button-rounded m-1"
+    [label]="interest.name">
+  </button>
   </div>
 </div>

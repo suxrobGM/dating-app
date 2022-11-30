@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators, AbstractControl, ValidationErrors} from '@angular/forms';
-import {ApiService} from '@shared/services';
+import {MessageService} from 'primeng/api';
+import {UpdateAccountCommand, User} from '@shared/models';
+import {ApiService, UserDataService} from '@shared/services';
 
 
 @Component({
@@ -12,19 +14,26 @@ export class SecurityTabComponent implements OnInit {
   private readonly passwordRegex: RegExp;
   public readonly passwordPattern: string;
   public readonly form: FormGroup;
+  public isBusy: boolean;
+  private user!: User;
 
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private messageService: MessageService,
+    private userDataService: UserDataService)
+  {
     this.passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@^!%*?&#])(?=.{8,})';
     this.passwordRegex = new RegExp(this.passwordPattern);
+    this.isBusy = false;
 
     this.form = new FormGroup({
       email: new FormControl('', {
-        validators: Validators.compose([Validators.required, Validators.email, this.checkEmail.bind(this)]),
+        validators: Validators.compose([Validators.email, this.checkEmail.bind(this)]),
         updateOn: 'blur',
       }),
-      oldPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
-      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
-      confirmPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8)])),
+      oldPassword: new FormControl('', Validators.minLength(8)),
+      password: new FormControl('', Validators.minLength(8)),
+      confirmPassword: new FormControl('', Validators.minLength(8)),
     },
     {
       validators: this.matchPasswords.bind(this),
@@ -32,6 +41,11 @@ export class SecurityTabComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.userDataService.getUser()!;
+
+    this.form.patchValue({
+      email: this.user.email,
+    });
   }
 
   hasError(controlName: string, errorType: string): boolean {
@@ -40,13 +54,50 @@ export class SecurityTabComponent implements OnInit {
   }
 
   submit() {
+    const form = this.form.value;
+    const userId = this.user.id;
 
+    const command: UpdateAccountCommand = {
+      id: userId,
+      email: form.email,
+      oldPassword: form.oldPassword,
+      newPassword: form.password,
+    };
+
+    this.isBusy = true;
+
+    this.apiService.updateAccount(command).subscribe((result) => {
+      if (result.success) {
+        this.messageService.add({
+          severity: 'success',
+          key: 'formMessage',
+          summary: 'Success',
+          detail: 'Profile data has been updated successfully',
+        });
+
+        if (command.email) {
+          this.user.email = command.email;
+          this.userDataService.updateUser(this.user);
+        }
+      }
+      else {
+        this.messageService.add({
+          severity: 'error',
+          key: 'formMessage',
+          summary: 'Error',
+          detail: 'Could not update the profile data',
+        });
+      }
+
+      this.isBusy = false;
+    });
   }
 
   private checkEmail(control: AbstractControl): ValidationErrors | null {
     const email = control.value as string;
+    const currentEmail = this.userDataService.getUser()?.email;
 
-    if (!email.includes('@')) {
+    if (!email.includes('@') || currentEmail === email) {
       return null;
     }
 
@@ -61,8 +112,14 @@ export class SecurityTabComponent implements OnInit {
   }
 
   private matchPasswords(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password')?.value; // get password from our password form control
-    const confirmPassword = control.get('confirmPassword')?.value; // get password from our confirmPassword form control
+    const oldPassword = control.get('oldPassword');
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+
+    if (password && oldPassword === null) {
+      control.get('oldPassword')?.setErrors({passwordNotSet: true});
+      return {passwordNotSet: true};
+    }
 
     if (!this.passwordRegex.test(password)) {
       control.get('password')?.setErrors({passwordIncorrect: true});

@@ -9,6 +9,8 @@ import {
   PagedResponseResult,
   Profile,
   ResponseResult,
+  UpdateAccountCommand,
+  UpdateProfileCommand,
 } from '../models';
 
 
@@ -45,16 +47,25 @@ export class ApiService {
         .pipe(catchError((err) => this.handleError(err)));
   }
 
+  updateAccount(command: UpdateAccountCommand): Observable<ResponseResult> {
+    const url = `${this.host}/account/update/${command.id}`;
+    const body = JSON.stringify(command);
+
+    return this.httpClient
+        .put<ResponseResult>(url, body, {headers: this.headers})
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
   // #endregion
 
 
-  // #region Interests API
+  // #region Interest API
 
   getInterestsList(): Observable<PagedResponseResult<Interest>> {
-    const url = `${this.host}/interests/list`;
+    const url = `${this.host}/interest/list`;
 
     return this.httpClient
-        .get<PagedResponseResult<Interest>>(url)
+        .get<PagedResponseResult<Interest>>(url, {headers: this.headers})
         .pipe(catchError((err) => this.handleError(err)));
   }
 
@@ -71,9 +82,9 @@ export class ApiService {
         .pipe(catchError((err) => this.handleError(err)));
   }
 
-  updateProfile(profile: Profile): Observable<ResponseResult> {
-    const url = `${this.host}/profile/update/${profile.id}`;
-    const body = JSON.stringify(profile);
+  updateProfile(command: UpdateProfileCommand): Observable<ResponseResult> {
+    const url = `${this.host}/profile/update/${command.id}`;
+    const body = JSON.stringify(command);
 
     return this.httpClient
         .put<ResponseResult>(url, body, {headers: this.headers})

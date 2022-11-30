@@ -5,8 +5,8 @@
   <div class="flex flex-column h-full justify-content-between">
     <div class="mt-6">
       <div class="flex align-items-center">
-        <p-avatar image="/assets/image/5.jpg" shape="circle"></p-avatar>
-        <span class="font-bold ml-2">Sukhrob Ilyosbekov</span>
+        <p-avatar [image]="user?.profilePhoto!" shape="circle"></p-avatar>
+        <span class="font-bold ml-2">{{user?.firstName}} {{user?.lastName}}</span>
       </div>
       <div class="pt-3">
         <button pButton 
@@ -50,7 +50,7 @@
         class="p-button-secondary p-button-outlined"
         icon="pi pi-arrow-circle-left text-xl" 
         label="Logout"
-        (click)="logout()"> 
+        (click)="goToLogout()"> 
       </button>
     </div>
   </div>

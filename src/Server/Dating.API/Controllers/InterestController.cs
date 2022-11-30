@@ -15,7 +15,7 @@ public class InterestController : ControllerBase
     [AllowAnonymous]
     [ProducesResponseType(typeof(ResponseResult<InterestDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetList([FromBody] GetInterestsQuery request)
+    public async Task<IActionResult> GetList([FromQuery] GetInterestsQuery request)
     {
         var result = await _mediator.Send(request);
 

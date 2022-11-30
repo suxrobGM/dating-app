@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {OidcSecurityService} from 'angular-auth-oidc-client';
+import {Router} from '@angular/router';
+import {User} from '@shared/models';
+import {UserDataService} from '@shared/services';
 
 
 @Component({
@@ -8,14 +10,20 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  constructor(private oidcService: OidcSecurityService)
+  public user: User | null;
+
+  constructor(
+    private userDataService: UserDataService,
+    private router: Router)
   {
+    this.user = null;
   }
 
   ngOnInit(): void {
+    this.user = this.userDataService.getUser();
   }
 
-  logout() {
-    this.oidcService.logoff();
+  goToLogout() {
+    this.router.navigateByUrl('/account/logout');
   }
 }

@@ -5,15 +5,22 @@ import {Media} from './media';
 import {PagedResponseResult} from './pagedResponseResult';
 import {Profile} from './profile';
 import {CreateAccountCommand} from './createAccountCommand';
-import {UserIdentity} from './userIdentity';
+import {User} from './user';
+import {UserData} from './userData';
+import {UpdateAccountCommand} from './updateAccountCommand';
+import {UpdateProfileCommand} from './updateProfileCommand';
+
 
 export {
   Account,
   CreateAccountCommand,
+  UpdateAccountCommand,
   Interest,
   Media,
   Profile,
+  UpdateProfileCommand,
   PagedResponseResult,
   ResponseResult,
-  UserIdentity,
+  UserData,
+  User,
 };

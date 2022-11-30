@@ -11,6 +11,24 @@ public static class Config
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
+            new IdentityResources.Email(),
+            new()
+            {
+                Name = "full_name",
+                DisplayName = "Full name",
+                UserClaims = {
+                    CustomClaimTypes.FirstName,
+                    CustomClaimTypes.LastName
+                }
+            },
+            new()
+            {
+                Name = "picture",
+                DisplayName = "Profile picture",
+                UserClaims = {
+                    CustomClaimTypes.Picture
+                }
+            },
             new()
             {
                 Name = "roles",
@@ -40,7 +58,7 @@ public static class Config
                 Name = "dating.api.client",
                 DisplayName = "Dating Client API",
                 UserClaims = {
-                    CustomClaimTypes.Role, 
+                    CustomClaimTypes.Role,
                     CustomClaimTypes.Permission
                 }
             }
@@ -56,11 +74,11 @@ public static class Config
                 Name = "dating.api",
                 DisplayName = "Dating API",
                 Scopes = {
-                    "dating.api.client",
+                    "dating.api.admin",
                     "dating.api.client"
                 },
                 UserClaims = {
-                    CustomClaimTypes.Role, 
+                    CustomClaimTypes.Role,
                     CustomClaimTypes.Permission
                 }
             }

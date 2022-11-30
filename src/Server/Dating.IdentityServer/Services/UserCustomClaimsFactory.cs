@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Dating.IdentityServer.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
@@ -23,8 +24,33 @@ public class UserCustomClaimsFactory : UserClaimsPrincipalFactory<User, AppRole>
     {
         var claimsIdentity = await base.GenerateClaimsAsync(user);
 
+        AddPictureClaims(claimsIdentity, user);
+        AddFullNameClaims(claimsIdentity, user);
         await AddAppRoleClaims(claimsIdentity, user);
         return claimsIdentity;
+    }
+
+    private void AddPictureClaims(ClaimsIdentity claimsIdentity, User user)
+    {
+        var profilePhoto = user.Profile!.GetMainPhoto();
+        
+        if (profilePhoto?.Photo != null)
+        {
+            claimsIdentity.AddClaim(new Claim(CustomClaimTypes.Picture, profilePhoto.Photo.Url));
+        }
+    }
+
+    private void AddFullNameClaims(ClaimsIdentity claimsIdentity, User user)
+    {
+        if (!string.IsNullOrEmpty(user.FirstName))
+        {
+            claimsIdentity.AddClaim(new Claim(CustomClaimTypes.FirstName, user.FirstName));
+        }
+        
+        if (!string.IsNullOrEmpty(user.LastName))
+        {
+            claimsIdentity.AddClaim(new Claim(CustomClaimTypes.LastName, user.LastName));
+        }
     }
 
     private async Task AddAppRoleClaims(ClaimsIdentity claimsIdentity, User user)
