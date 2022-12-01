@@ -24,4 +24,18 @@ public class InterestController : ControllerBase
 
         return BadRequest(result);
     }
+    
+    [HttpGet("user/{userId}")]
+    [ProducesResponseType(typeof(ResponseResult<InterestDto[]>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseResult), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetUserInterests(string userId)
+    {
+        var request = new GetUserInterestsQuery(userId);
+        var result = await _mediator.Send(request);
+
+        if (result.Success)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
 }

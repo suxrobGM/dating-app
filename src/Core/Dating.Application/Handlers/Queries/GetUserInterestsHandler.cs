@@ -1,30 +1,25 @@
 ﻿namespace Dating.Application.Handlers.Queries;
 
-internal class GetProfilePhotosHandler : 
-    IRequestHandler<GetProfilePhotosQuery, ResponseResult<ProfilePhotoDto[]>>
+internal class GetUserInterestsHandler : 
+    IRequestHandler<GetUserInterestsQuery, ResponseResult<InterestDto[]>>
 {
     private readonly IRepository _repository;
 
-    public GetProfilePhotosHandler(IRepository repository)
+    public GetUserInterestsHandler(IRepository repository)
     {
         _repository = repository;
     }
     
-    public async Task<ResponseResult<ProfilePhotoDto[]>> Handle(
-        GetProfilePhotosQuery request, CancellationToken cancellationToken)
+    public async Task<ResponseResult<InterestDto[]>> Handle(
+        GetUserInterestsQuery request, CancellationToken cancellationToken)
     {
-        var profile = await _repository.GetAsync<Profile>(i => i.UserId == request.UserId);
+        var user = await _repository.GetAsync<User>(i => i.Id == request.UserId);
         
-        if (profile == null)
-            return ResponseResult<ProfilePhotoDto[]>.CreateError("Could not find the specified user profile");
+        if (user == null)
+            return ResponseResult<InterestDto[]>.CreateError("Could not find the specified user");
 
-        var profilePhotos = profile.Photos.Select(i => new ProfilePhotoDto
-        {
-            UserId = profile.UserId,
-            PhotoUrl = i.Photo?.Url,
-            IsMainPhoto = i.IsMainPhoto
-        }).ToArray();
+        var interests = user.Interests.Select(i => new InterestDto(i.Id, i.Name)).ToArray();
         
-        return ResponseResult<ProfilePhotoDto[]>.CreateSuccess(profilePhotos);
+        return ResponseResult<InterestDto[]>.CreateSuccess(interests);
     }
 }

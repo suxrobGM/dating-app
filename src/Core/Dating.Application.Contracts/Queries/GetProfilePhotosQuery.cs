@@ -1,8 +1,8 @@
 ﻿namespace Dating.Application.Contracts.Queries;
 
-public class GetProfilePicturesQuery : RequestBase<ResponseResult<ProfilePhotoDto>>
+public class GetProfilePhotosQuery : RequestBase<ResponseResult<ProfilePhotoDto[]>>
 {
-    public GetProfilePicturesQuery(string userId)
+    public GetProfilePhotosQuery(string userId)
     {
         UserId = userId;
     }

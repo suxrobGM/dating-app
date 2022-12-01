@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Services;
 
-public class BlobService
+internal class BlobService
 {
     
 }

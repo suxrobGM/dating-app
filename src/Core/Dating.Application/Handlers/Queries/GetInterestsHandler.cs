@@ -15,7 +15,7 @@ internal class GetInterestsHandler : IRequestHandler<GetInterestsQuery, PagedRes
         GetInterestsQuery request, CancellationToken cancellationToken)
     {
         var interestsList = await _repository.GetListAsync<Interest>();
-        var interestsDtoList = interestsList.Select(i => new InterestDto(i.Name)).ToList();
+        var interestsDtoList = interestsList.Select(i => new InterestDto(i.Id, i.Name)).ToList();
         var itemsCount = interestsDtoList.Count;
         return new PagedResponseResult<InterestDto>(interestsDtoList, itemsCount, 1);
     }

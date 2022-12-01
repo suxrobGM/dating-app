@@ -1,10 +1,10 @@
 ﻿namespace Dating.Application.Validators.Commands;
 
-internal class DeleteProfilePhotoValidator : AbstractValidator<DeleteProfilePhotoCommand>
+internal class UploadProfilePhotoValidator : AbstractValidator<UploadProfilePhotoCommand>
 {
-    public DeleteProfilePhotoValidator()
+    public UploadProfilePhotoValidator()
     {
         RuleFor(i => i.UserId).NotEmpty();
-        RuleFor(i => i.PhotoId).NotEmpty();
+        RuleFor(i => i.PhotoUrl).NotEmpty();
     }
 }

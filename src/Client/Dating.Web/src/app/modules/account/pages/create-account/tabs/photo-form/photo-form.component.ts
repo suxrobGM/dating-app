@@ -53,7 +53,7 @@ export class PhotoFormComponent implements OnInit {
 
     this.photoEditor.open(imageFile, this.photoEditorOptions)
         .subscribe(({base64, file}) => {
-          if (!base64) {
+          if (!base64 || !file) {
             return;
           }
 

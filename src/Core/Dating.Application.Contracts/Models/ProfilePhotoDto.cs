@@ -1,6 +1,8 @@
 ﻿namespace Dating.Application.Contracts.Models;
 
-public class ProfilePhotoDto
+public record ProfilePhotoDto
 {
-    
+    public string? PhotoId { get; set; }
+    public string? PhotoUrl { get; set; }
+    public bool? IsMainPhoto { get; set; }
 }

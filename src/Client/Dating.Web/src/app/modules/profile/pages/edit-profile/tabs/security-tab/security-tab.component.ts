@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators, AbstractControl, ValidationErrors} from '@angular/forms';
 import {MessageService} from 'primeng/api';
-import {UpdateAccountCommand, User} from '@shared/models';
+import {User} from '@shared/models';
+import {UpdateAccountCommand} from '@shared/models/commands';
 import {ApiService, UserDataService} from '@shared/services';
 
 

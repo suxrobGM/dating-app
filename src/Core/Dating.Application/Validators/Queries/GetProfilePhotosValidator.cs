@@ -1,8 +1,8 @@
 ﻿namespace Dating.Application.Validators.Queries;
 
-internal class GetUserInterestsValidator : AbstractValidator<GetUserInterestsQuery>
+internal class GetProfilePhotosValidator : AbstractValidator<GetProfilePhotosQuery>
 {
-    public GetUserInterestsValidator()
+    public GetProfilePhotosValidator()
     {
         RuleFor(i => i.UserId).NotEmpty();
     }

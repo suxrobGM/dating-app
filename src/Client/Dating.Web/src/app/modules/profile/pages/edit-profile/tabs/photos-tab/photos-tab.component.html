@@ -1,16 +1,42 @@
-<p-galleria 
-  [value]="images" 
-  [numVisible]="5" 
-  thumbnailsPosition="left" 
-  verticalThumbnailViewPortHeight="150">
+<div class="grid">
+  <div class="col-12">
+    <p-progressSpinner *ngIf="isBusy"></p-progressSpinner>
+  </div>
 
-  <ng-template pTemplate="item" let-item>
-    <img [src]="item.src" [alt]="item.alt" class="preview-image" />
-  </ng-template>
-  
-  <ng-template pTemplate="thumbnail" let-item>
-    <div class="grid grid-nogutter justify-content-center">
-      <img [src]="item.src" class="thumbnail" />
+  <div class="col-12">
+    <p-galleria [value]="images" [numVisible]="5" thumbnailsPosition="left" verticalThumbnailViewPortHeight="150"
+      [activeIndex]="currentImageIndex">
+
+      <ng-template pTemplate="item" let-item>
+        <img [src]="item.photoUrl" alt="Profile photo" class="preview-image" />
+      </ng-template>
+
+      <ng-template pTemplate="thumbnail" let-item>
+        <div class="grid grid-nogutter justify-content-center">
+          <img [src]="item.photoUrl" alt="Profile photo thumbnail" class="thumbnail" />
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="caption" let-item>
+        <div *ngIf="item.isMainPhoto">
+          <h4 style="margin-bottom: .5rem; color: #ffffff;">Main Photo</h4>
+        </div>
+      </ng-template>
+    </p-galleria>
+  </div>
+
+  <div class="col-12">
+    <div>
+      You can upload up to 10 images
     </div>
-  </ng-template>
-</p-galleria>
+    <p-fileUpload #fileUploader styleClass="my-2" mode="basic" accept="image/*" chooseLabel="Upload photo" [auto]="true"
+      [customUpload]="true" (uploadHandler)="uploadImage($event)">
+    </p-fileUpload>
+    <button pButton icon="pi pi-image" class="p-button-raised ml-0 m-1" label="Set main photo"
+      pTooltip="Set this image as a profile main photo" tooltipPosition="top">
+    </button>
+    <button pButton icon="pi pi-trash" class="p-button-raised p p-button-danger ml-0 m-1" label="Delete" (click)="deletePhoto()"></button>
+
+  </div>
+
+</div>

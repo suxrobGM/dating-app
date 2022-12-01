@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MessageService} from 'primeng/api';
-import {UpdateProfileCommand} from '@shared/models';
+import {UpdateProfileCommand} from '@shared/models/commands';
 import {ApiService, UserDataService} from '@shared/services';
 import {EnumType, Gender, SexualOrientation} from '@shared/types';
 import {EnumUtils} from '@shared/utils';
@@ -31,7 +31,7 @@ export class EditTabComponent implements OnInit {
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       gender: new FormControl(Gender.Male, Validators.required),
-      birthdate: new FormControl('', Validators.required),
+      birthdate: new FormControl(null, Validators.required),
       livingCity: new FormControl('', Validators.required),
       orientation: new FormControl(SexualOrientation.Straight, Validators.required),
       school: new FormControl(''),
@@ -104,7 +104,7 @@ export class EditTabComponent implements OnInit {
           firstName: profile.firstName,
           lastName: profile.lastName,
           gender: profile.gender,
-          birthdate: profile.birthdate,
+          birthdate: new Date(profile.birthdate!),
           livingCity: profile.livingCity,
           orientation: profile.orientation,
           school: profile.school,

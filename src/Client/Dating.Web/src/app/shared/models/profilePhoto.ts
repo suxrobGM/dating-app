@@ -1,5 +1,5 @@
 export interface ProfilePhoto {
-  userId: string;
-  photoUrl: string;
+  photoId?: string;
+  photoUrl?: string;
   isMainPhoto?: boolean;
 }

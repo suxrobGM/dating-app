@@ -4,14 +4,20 @@ import {MessageService} from 'primeng/api';
 import {AppConfig} from '@configs';
 import {catchError, Observable, of} from 'rxjs';
 import {
-  CreateAccountCommand,
   Interest,
   PagedResponseResult,
   Profile,
+  ProfilePhoto,
   ResponseResult,
+} from '../models';
+import {
+  CreateAccountCommand,
+  DeleteProfilePhotoCommand,
+  SetProfileMainPhotoCommand,
   UpdateAccountCommand,
   UpdateProfileCommand,
-} from '../models';
+  UploadProfilePhotoCommand,
+} from '../models/commands';
 
 
 @Injectable()
@@ -69,6 +75,14 @@ export class ApiService {
         .pipe(catchError((err) => this.handleError(err)));
   }
 
+  getUserInterests(userId: string): Observable<ResponseResult<Interest[]>> {
+    const url = `${this.host}/interest/user/${userId}`;
+
+    return this.httpClient
+        .get<ResponseResult<Interest[]>>(url, {headers: this.headers})
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
   // #endregion
 
 
@@ -79,6 +93,41 @@ export class ApiService {
 
     return this.httpClient
         .get<ResponseResult<Profile>>(url)
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  getProfilePhotos(userId: string): Observable<ResponseResult<ProfilePhoto[]>> {
+    const url = `${this.host}/profile/photo/${userId}`;
+
+    return this.httpClient
+        .get<ResponseResult<ProfilePhoto[]>>(url, {headers: this.headers})
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  uploadProfilePhoto(command: UploadProfilePhotoCommand): Observable<ResponseResult<ProfilePhoto>> {
+    const url = `${this.host}/profile/photo`;
+    const body = JSON.stringify(command);
+
+    return this.httpClient
+        .post<ResponseResult<ProfilePhoto>>(url, body, {headers: this.headers})
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  setProfileMainPhoto(command: SetProfileMainPhotoCommand): Observable<ResponseResult> {
+    const url = `${this.host}/profile/photo/setMainPhoto`;
+    const body = JSON.stringify(command);
+
+    return this.httpClient
+        .put<ResponseResult>(url, body, {headers: this.headers})
+        .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  deleteProfilePhoto(command: DeleteProfilePhotoCommand): Observable<ResponseResult> {
+    const url = `${this.host}/profile/photo/delete`;
+    const body = JSON.stringify(command);
+
+    return this.httpClient
+        .put<ResponseResult>(url, body, {headers: this.headers})
         .pipe(catchError((err) => this.handleError(err)));
   }
 

@@ -27,7 +27,7 @@ export class ProfileFormComponent implements OnInit {
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       gender: new FormControl(Gender.Male, Validators.required),
-      birthdate: new FormControl('', Validators.required),
+      birthdate: new FormControl(null, Validators.required),
       livingCity: new FormControl('', Validators.required),
       orientation: new FormControl(SexualOrientation.Straight, Validators.required),
     });

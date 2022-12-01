@@ -1,4 +1,4 @@
-import {Gender, SexualOrientation} from '@shared/types';
+import {Gender, SexualOrientation} from '../../types';
 
 export interface UpdateProfileCommand {
   id: string;
