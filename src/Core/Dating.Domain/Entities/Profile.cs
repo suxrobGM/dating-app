@@ -16,7 +16,11 @@ public class Profile : AuditableEntity
 
     public ProfilePhoto AddPhoto(Media photo)
     {
-        var profilePhoto = new ProfilePhoto { Photo = photo };
+        var profilePhoto = new ProfilePhoto
+        {
+            PhotoId = photo.Id,
+            Photo = photo
+        };
         Photos.Add(profilePhoto);
         return profilePhoto;
     }
@@ -32,8 +36,8 @@ public class Profile : AuditableEntity
             return;
 
         if (photo.IsMainPhoto)
-            SetMainPhoto(Photos.First());
-        
+            Photos[1].IsMainPhoto = true;
+
         Photos.Remove(photo);
     }
     

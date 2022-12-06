@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Validators.Commands;
 
-internal class DeleteProfilePhotoValidator : AbstractValidator<DeleteProfilePhotoCommand>
+public class DeleteProfilePhotoValidator : AbstractValidator<DeleteProfilePhotoCommand>
 {
     public DeleteProfilePhotoValidator()
     {

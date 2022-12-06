@@ -14,9 +14,7 @@ internal class UpdateProfileHandler : IRequestHandler<UpdateProfileCommand, Resp
         var profile = await _repository.GetAsync<Profile>(i => i.Id == request.Id || i.UserId == request.Id);
 
         if (profile == null)
-        {
             return ResponseResult<ProfileDto>.CreateError("Could not find the specified profile");
-        }
 
         if (!string.IsNullOrEmpty(request.FirstName))
         {

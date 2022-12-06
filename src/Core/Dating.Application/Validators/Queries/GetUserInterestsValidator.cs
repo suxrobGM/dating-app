@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Validators.Queries;
 
-internal class GetUserInterestsValidator : AbstractValidator<GetUserInterestsQuery>
+public class GetUserInterestsValidator : AbstractValidator<GetUserInterestsQuery>
 {
     public GetUserInterestsValidator()
     {

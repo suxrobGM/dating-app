@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Validators.Commands;
 
-internal class CreateAccountValidator : AbstractValidator<CreateAccountCommand>
+public class CreateAccountValidator : AbstractValidator<CreateAccountCommand>
 {
     public CreateAccountValidator()
     {

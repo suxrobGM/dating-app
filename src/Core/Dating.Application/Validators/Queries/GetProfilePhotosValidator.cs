@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Validators.Queries;
 
-internal class GetProfilePhotosValidator : AbstractValidator<GetProfilePhotosQuery>
+public class GetProfilePhotosValidator : AbstractValidator<GetProfilePhotosQuery>
 {
     public GetProfilePhotosValidator()
     {

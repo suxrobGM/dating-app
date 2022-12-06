@@ -48,5 +48,5 @@
     <textarea formControlName="bio" [rows]="5" [cols]="60" pInputTextarea></textarea>
   </div>
 
-  <button pButton type="submit" class="p-button-raised mt-3" label="Save"></button>
+  <button pButton type="submit" class="p-button-raised mt-3" label="Save" [disabled]="isBusy"></button>
 </form>

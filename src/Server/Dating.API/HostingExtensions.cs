@@ -1,7 +1,7 @@
 ﻿using System.Text;
+using Dating.API.Middlewares;
 using Dating.Application;
 using Dating.Infrastructure.EF;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -13,6 +13,7 @@ internal static class HostingExtensions
     {
         builder.Services.AddApplicationLayer();
         builder.Services.AddInfrastructureLayer(builder.Configuration);
+        builder.Services.AddScoped<ExceptionHandlingMiddleware>();
 
         builder.Services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
@@ -58,6 +59,7 @@ internal static class HostingExtensions
                     .AllowAnyMethod();
             });
         });
+        
         return builder.Build();
     }
 
@@ -76,7 +78,9 @@ internal static class HostingExtensions
         app.UseAuthentication();
         app.UseAuthorization();
 
+        app.UseCustomExceptionHandler();
         app.MapControllers();
+        
         return app;
     }
 

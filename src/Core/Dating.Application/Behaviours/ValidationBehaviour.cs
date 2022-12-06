@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Behaviours;
 
-internal class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public sealed class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TResponse : IResponseResult, new()
 {

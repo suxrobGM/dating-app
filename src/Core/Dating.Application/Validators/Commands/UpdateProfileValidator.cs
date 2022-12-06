@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Validators.Commands;
 
-internal class UpdateProfileValidator : AbstractValidator<UpdateProfileCommand>
+public class UpdateProfileValidator : AbstractValidator<UpdateProfileCommand>
 {
     public UpdateProfileValidator()
     {

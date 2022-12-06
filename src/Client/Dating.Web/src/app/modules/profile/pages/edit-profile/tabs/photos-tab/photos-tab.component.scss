@@ -10,3 +10,15 @@
   width: auto;
   object-fit: contain;
 }
+
+.galleria-footer {
+  background-color: black;
+  color: white;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+
+app-photos-tab .p-galleria-item-nav .p-link {
+  color: black;
+}

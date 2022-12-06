@@ -1,22 +1,26 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgxCroppedEvent, NgxPhotoEditorService, Options} from 'ngx-photo-editor';
 import {MessageService} from 'primeng/api';
 import {FileUpload} from 'primeng/fileupload';
 import {ApiService, BlobService, UserDataService} from '@shared/services';
 import {ProfilePhoto} from '@shared/models';
-import {DeleteProfilePhotoCommand, UploadProfilePhotoCommand} from '@shared/models/commands';
+import {
+  DeleteProfilePhotoCommand,
+  SetProfileMainPhotoCommand,
+  UploadProfilePhotoCommand,
+} from '@shared/models/commands';
 
 
 @Component({
   selector: 'app-photos-tab',
   templateUrl: './photos-tab.component.html',
   styleUrls: ['./photos-tab.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PhotosTabComponent implements OnInit {
   private readonly photoEditorOptions: Options;
-  public images: ProfilePhoto[];
   public currentImageIndex: number;
-  public uploadedImage: string | null;
+  public images: ProfilePhoto[];
   public isBusy: boolean;
 
   @ViewChild('fileUploader') fileUploader!: FileUpload;
@@ -28,7 +32,6 @@ export class PhotosTabComponent implements OnInit {
     private photoEditor: NgxPhotoEditorService,
     private messageService: MessageService)
   {
-    this.uploadedImage = null;
     this.isBusy = false;
     this.currentImageIndex = 0;
     this.images = [];
@@ -40,29 +43,31 @@ export class PhotosTabComponent implements OnInit {
       resizeToHeight: 1080,
       viewMode: 1,
     };
-
-    this.images = [
-      {
-        photoUrl: '/assets/image/1.jpg',
-      },
-      {
-        photoUrl: '/assets/image/2.jpg',
-      },
-      {
-        photoUrl: '/assets/image/3.jpg',
-      },
-      {
-        photoUrl: '/assets/image/4.jpg',
-
-      },
-      {
-        photoUrl: '/assets/image/5.jpg',
-      },
-    ];
   }
 
   ngOnInit(): void {
     this.fetchProfilePhotos();
+  }
+
+  getCurrentImage(): ProfilePhoto {
+    return this.images[this.currentImageIndex];
+  }
+
+  changeSelectedImage(event: number) {
+    this.currentImageIndex = event;
+  }
+
+  canUploadPhoto(): boolean {
+    return this.images.length <= 10;
+  }
+
+  canDeletePhoto(): boolean {
+    return this.images.length > 1;
+  }
+
+  canSetMainPhoto(): boolean {
+    const selectedImage = this.images[this.currentImageIndex];
+    return selectedImage?.isMainPhoto === false;
   }
 
   uploadImage(event: FileUploadEvent) {
@@ -72,6 +77,32 @@ export class PhotosTabComponent implements OnInit {
         .subscribe(this.photoEditorHandler.bind(this));
 
     this.fileUploader.clear();
+  }
+
+  setMainPhoto() {
+    const selectedImage = this.images[this.currentImageIndex];
+    const userId = this.userDataService.getUserId();
+    this.isBusy = true;
+
+    const command: SetProfileMainPhotoCommand = {
+      userId: userId!,
+      photoId: selectedImage.photoId!,
+    };
+
+    this.apiService.setProfileMainPhoto(command).subscribe((result) => {
+      if (result.success) {
+        this.bringMainPhotoToTop(selectedImage);
+
+        this.messageService.add({
+          severity: 'success',
+          key: 'formMessage',
+          summary: 'Success',
+          detail: 'Changed the profile main picture',
+        });
+      }
+
+      this.isBusy = false;
+    });
   }
 
   deletePhoto() {
@@ -88,6 +119,14 @@ export class PhotosTabComponent implements OnInit {
     this.apiService.deleteProfilePhoto(command).subscribe((result) => {
       if (result.success) {
         this.images.splice(this.currentImageIndex, 1);
+        this.currentImageIndex = 0;
+
+        this.messageService.add({
+          severity: 'success',
+          key: 'formMessage',
+          summary: 'Success',
+          detail: 'Deleted the selected picture from profile',
+        });
       }
 
       this.isBusy = false;
@@ -101,6 +140,7 @@ export class PhotosTabComponent implements OnInit {
     this.apiService.getProfilePhotos(userId).subscribe((result) => {
       if (result.success) {
         this.images = result.value!;
+        this.bringMainPhotoToTop();
       }
 
       this.isBusy = false;
@@ -114,6 +154,7 @@ export class PhotosTabComponent implements OnInit {
       return;
     }
 
+    this.isBusy = true;
     const uploadResult = await this.blobService.uploadImage(file);
 
     if (uploadResult.success === false) {
@@ -136,12 +177,15 @@ export class PhotosTabComponent implements OnInit {
 
     this.apiService.uploadProfilePhoto(command).subscribe((result) => {
       if (result.success) {
-        const photo = result.value;
+        const photo = result.value!;
+        this.insertNewPhoto(photo);
 
-        this.images = [...this.images, {
-          photoId: photo?.photoId,
-          photoUrl: photo?.photoUrl,
-        }];
+        this.messageService.add({
+          severity: 'success',
+          key: 'formMessage',
+          summary: 'Success',
+          detail: 'Uploaded a new profile picture',
+        });
       }
       else {
         this.messageService.add({
@@ -151,7 +195,37 @@ export class PhotosTabComponent implements OnInit {
           detail: 'Something went wrong, could not upload the image, try again',
         });
       }
+
+      this.isBusy = false;
     });
+  }
+
+  private bringMainPhotoToTop(mainPhoto?: ProfilePhoto) {
+    let mainPhotoIndex = 0;
+
+    if (!mainPhoto) {
+      mainPhotoIndex = this.images.findIndex((i) => i.isMainPhoto);
+      mainPhoto = this.images[mainPhotoIndex];
+    }
+    else {
+      mainPhotoIndex = this.images.findIndex((i) => i.photoId === mainPhoto?.photoId);
+      mainPhoto.isMainPhoto = true;
+    }
+
+    this.images.splice(mainPhotoIndex, 1);
+    this.images.unshift(mainPhoto);
+
+    for (let i = 1; i < this.images.length; i++) {
+      const image = this.images[i];
+      image.isMainPhoto = false;
+    }
+
+    this.currentImageIndex = 0;
+  }
+
+  private insertNewPhoto(photo: ProfilePhoto) {
+    this.images = [...this.images, photo];
+    this.currentImageIndex = this.images.length - 1;
   }
 }
 

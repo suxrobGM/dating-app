@@ -15,6 +15,9 @@ internal class DeleteProfilePhotoHandler : IRequestHandler<DeleteProfilePhotoCom
 
         if (profile == null)
             return ResponseResult.CreateError("Could not find the specified user profile");
+
+        if (profile.Photos.Count <= 1)
+            return ResponseResult.CreateError("Can not delete the main photo, upload another photo then delete this one");
         
         profile.DeletePhoto(request.PhotoId!);
         await _repository.UnitOfWork.SaveChangesAsync();

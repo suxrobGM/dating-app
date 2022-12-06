@@ -19,7 +19,7 @@ internal class SetProfileMainPhotoHandler : IRequestHandler<SetProfileMainPhotoC
         var profilePhoto = profile.Photos.FirstOrDefault(i => i.PhotoId == request.PhotoId);
         
         if (profilePhoto == null)
-            return ResponseResult.CreateError("Could not find the specified profile photo from users photos");
+            return ResponseResult.CreateError("Could not find the specified profile photo from user pictures");
         
         profile.SetMainPhoto(profilePhoto);
         await _repository.UnitOfWork.SaveChangesAsync();

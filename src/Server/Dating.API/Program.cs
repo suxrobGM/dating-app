@@ -1,5 +1,6 @@
 using Serilog;
 using Dating.API;
+using Dating.API.Middlewares;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()

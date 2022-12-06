@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Validators.Queries;
 
-internal class UserExistsValidator : AbstractValidator<UserExistsQuery>
+public class UserExistsValidator : AbstractValidator<UserExistsQuery>
 {
     public UserExistsValidator()
     {

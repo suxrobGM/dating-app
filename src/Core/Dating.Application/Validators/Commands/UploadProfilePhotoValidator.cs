@@ -1,6 +1,6 @@
 ﻿namespace Dating.Application.Validators.Commands;
 
-internal class UploadProfilePhotoValidator : AbstractValidator<UploadProfilePhotoCommand>
+public class UploadProfilePhotoValidator : AbstractValidator<UploadProfilePhotoCommand>
 {
     public UploadProfilePhotoValidator()
     {
