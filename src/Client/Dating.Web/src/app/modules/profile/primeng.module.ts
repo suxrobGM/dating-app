@@ -9,6 +9,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {TabViewModule} from 'primeng/tabview';
 import {GalleriaModule} from 'primeng/galleria';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {PickListModule} from 'primeng/picklist';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     TabViewModule,
     GalleriaModule,
     ProgressSpinnerModule,
+    PickListModule,
   ],
 })
 export class PrimengModule { }
