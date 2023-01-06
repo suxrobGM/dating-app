@@ -1,16 +1,35 @@
 <div class="grid">
   <div class="col-12">
-    <h4>Pick up to 5 interests from the list</h4>
+    <p>You can pick up to 5 interests from the list</p>
   </div>
 
   <div class="col-12">
     <p-progressSpinner *ngIf="isBusy"></p-progressSpinner>
   </div>
   <div class="col-12">
-    <button pButton 
-      *ngFor="let interest of interestsList" 
-      class="p-button-danger p-button-outlined p-button-rounded m-1"
-      [label]="interest">
-  </button>
+    <!-- <p-pickList [source]="interestsList" [target]="userInterests" [responsive]="true" [dragdrop]="true"
+      sourceHeader="Interests list" targetHeader="Chosen interests" [showSourceControls]="false" [showTargetControls]="false"
+      [sourceStyle]="{'max-height': '500px'}" [targetStyle]="{'max-height': '500px'}" [metaKeySelection]="false">
+      <ng-template let-interest pTemplate="item">
+        
+        <div>{{interest.name}}</div>
+      </ng-template>
+    </p-pickList> -->
+
+    <div class="grid">
+      <div class="col-6 border-1" cdkDropList #interestsListBox="cdkDropList" [cdkDropListData]="interestsList"
+      [cdkDropListConnectedTo]="chosenInterestsListBox" (cdkDropListDropped)="pickInterest($event)">
+      <div *ngFor="let interest of interestsList" cdkDrag>{{interest.name}}</div>
+    </div>
+
+    <div class="col-6 border-1" cdkDropList #chosenInterestsListBox="cdkDropList" [cdkDropListData]="userInterests"
+      [cdkDropListConnectedTo]="interestsListBox" (cdkDropListDropped)="pickInterest($event)">
+      <div *ngFor="let interest of userInterests" cdkDrag>{{interest.name}}</div>
+    </div>
+    </div>
+    
+
+    <!-- <button pButton class="p-button-danger p-button-outlined p-button-rounded" [label]="interest.name"></button> -->
+    <button pButton type="submit" class="p-button-raised mt-3" label="Save" [disabled]="isBusy"></button>
   </div>
 </div>

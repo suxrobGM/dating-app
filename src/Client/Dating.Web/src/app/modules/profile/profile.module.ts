@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxPhotoEditorModule} from 'ngx-photo-editor';
 import {SharedModule} from '@shared';
@@ -29,6 +30,7 @@ import {
     PrimengModule,
     ReactiveFormsModule,
     ProfileRoutingModule,
+    DragDropModule,
   ],
 })
 export class ProfileModule { }

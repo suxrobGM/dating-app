@@ -1,3 +1,4 @@
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {Component, OnInit} from '@angular/core';
 import {Interest} from '@shared/models';
 import {ApiService, UserDataService} from '@shared/services';
@@ -9,17 +10,17 @@ import {ApiService, UserDataService} from '@shared/services';
   styleUrls: ['./interests-tab.component.scss'],
 })
 export class InterestsTabComponent implements OnInit {
-  public userInterests: Set<string>;
-  public interestsList: Set<string>;
-  public selectedInterest: string;
+  public userInterests: Interest[];
+  public interestsList: Interest[];
+  public selectedInterest: string = '';
   public isBusy: boolean;
 
   constructor(
     private apiService: ApiService,
     private userDataService: UserDataService)
   {
-    this.userInterests = new Set();
-    this.interestsList = new Set();
+    this.userInterests = [];
+    this.interestsList = [];
     this.isBusy = false;
   }
 
@@ -28,8 +29,20 @@ export class InterestsTabComponent implements OnInit {
     this.fetchUserInterests();
   }
 
-  pickInterest() {
-
+  pickInterest(event: CdkDragDrop<Interest[]>) {
+    console.log(event);
+    
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    }
+    else {
+      transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex,
+      );
+    }
   }
 
   private fetchInterestsList() {
@@ -37,8 +50,7 @@ export class InterestsTabComponent implements OnInit {
 
     this.apiService.getInterestsList().subscribe((result) => {
       if (result.success) {
-        const interestsList = result.items!;
-        interestsList.forEach((i) => this.interestsList.add(i.name));
+        this.interestsList = result.items!;
       }
 
       this.isBusy = false;
@@ -51,8 +63,7 @@ export class InterestsTabComponent implements OnInit {
 
     this.apiService.getUserInterests(userId).subscribe((result) => {
       if (result.success) {
-        const interestsList = result.value!;
-        interestsList.forEach((i) => this.userInterests.add(i.name));
+        this.userInterests = result.value!;
       }
 
       this.isBusy = false;
