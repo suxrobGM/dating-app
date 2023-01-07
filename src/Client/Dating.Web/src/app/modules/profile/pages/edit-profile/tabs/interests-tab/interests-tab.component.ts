@@ -30,8 +30,6 @@ export class InterestsTabComponent implements OnInit {
   }
 
   pickInterest(event: CdkDragDrop<Interest[]>) {
-    console.log(event);
-    
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     }
