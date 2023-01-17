@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {EditTabComponent} from './edit-tab.component';
+
 
 describe('EditTabComponent', () => {
   let component: EditTabComponent;
